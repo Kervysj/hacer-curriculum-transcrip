@@ -37,12 +37,12 @@
 </div>
 </div>
 
-<!-- PASO 2: DATOS -->
-<div id="step-data" class="step" style="display:none;">
+<!-- PASO 2: FORMULARIO -->
+<div id="step-form" class="step" style="display:none;">
 <div class="step-header">
 <span class="step-number">2</span>
-<h2 id="data-title">Ingresa los datos de tu CV</h2>
-<button class="btn-back" onclick="goBackToType()">⬅ Cambiar tipo</button>
+<h2 id="form-title">Ingresa tus datos</h2>
+<button class="btn-back" onclick="goToStep('step-type')">⬅ Volver</button>
 </div>
 
 <!-- FORMULARIO CV -->
@@ -50,7 +50,7 @@
 
 <!-- OPCIÓN RÁPIDA: PEGAR CV COMPLETO -->
 <div class="quick-parse-section">
-<h3>📋 Opción Rápida: Pegar CV Completo</h3>
+<h3> Opción Rápida: Pegar CV Completo</h3>
 <p>Pega aquí todo tu currículum y el sistema lo organizará automáticamente:</p>
 <textarea id="cv-texto-completo" rows="12" placeholder="Ejemplo:
 
@@ -65,18 +65,16 @@ TSU en Mantenimiento con experiencia en áreas administrativas...
 
 FORMACIÓN ACADÉMICA
 Técnico Superior Universitario en Mantenimiento - UPTJAA
-Bachiller - Liceo Nacional Dr. Felipe Guevara Rojas
 
 EXPERIENCIA LABORAL
-Departamento Administrativo y de Campo - Mantenimiento Mayor PDVSA
+Departamento Administrativo - Mantenimiento Mayor PDVSA
 Gestión documental técnica y operativa...
 
 HABILIDADES Y CONOCIMIENTOS
 Software: Manejo avanzado de Microsoft Excel, Word y PowerPoint
 
 CURSOS REALIZADOS
-Atención al Cliente - Certificación complementaria
-Asistente Administrativo - CEFOIN (2017)"></textarea>
+Atención al Cliente - Certificación complementaria"></textarea>
 <button class="btn-parse" onclick="parsearCVCompleto()">
 🤖 Analizar y Organizar Automáticamente
 </button>
@@ -117,12 +115,12 @@ Asistente Administrativo - CEFOIN (2017)"></textarea>
 </div>
 
 <div class="form-section">
-<h3>🎯 Perfil Profesional</h3>
+<h3> Perfil Profesional</h3>
 <textarea id="cv-perfil" rows="4" placeholder="Breve descripción de tu perfil profesional..."></textarea>
 </div>
 
 <div class="form-section">
-<h3>💼 Experiencia Laboral</h3>
+<h3> Experiencia Laboral</h3>
 <div id="experiencia-list"></div>
 <button type="button" class="btn-add" onclick="addExperiencia()">➕ Agregar Experiencia</button>
 </div>
@@ -140,8 +138,8 @@ Asistente Administrativo - CEFOIN (2017)"></textarea>
 </div>
 
 <div class="form-section">
-<h3>🛠️ Habilidades</h3>
-<textarea id="cv-habilidades" rows="3" placeholder="Ej: Excel, Liderazgo, Inglés, Ventas (separadas por coma)"></textarea>
+<h3>️ Habilidades</h3>
+<textarea id="cv-habilidades" rows="3" placeholder="Ej: Excel, Liderazgo, Inglés, Ventas"></textarea>
 </div>
 
 <div class="form-section">
@@ -197,7 +195,8 @@ Asistente Administrativo - CEFOIN (2017)"></textarea>
 </div>
 </div>
 
-<button class="btn-generate" onclick="generateDocument()">🎨 Generar Documento</button>
+<!-- UN SOLO BOTÓN GENERAR -->
+<button class="btn-generate" onclick="generarCV()">🎨 Generar CV y Ver Vista Previa</button>
 </div>
 
 <!-- FORMULARIO TRANSCRIPCIÓN -->
@@ -231,7 +230,7 @@ Asistente Administrativo - CEFOIN (2017)"></textarea>
 </div>
 
 <div class="form-section">
-<h3>📋 Datos del Documento</h3>
+<h3> Datos del Documento</h3>
 <div class="form-grid">
 <div class="form-group">
 <label>Título</label>
@@ -259,38 +258,39 @@ Asistente Administrativo - CEFOIN (2017)"></textarea>
 </p>
 <textarea id="trans-contenido" rows="15" placeholder="Pega aquí el contenido..."></textarea>
 </div>
-</div>
 
-<button class="btn-generate" onclick="generateDocument()">🎨 Generar Documento</button>
+<!-- UN SOLO BOTÓN GENERAR -->
+<button class="btn-generate" onclick="generarTranscripcion()">📝 Generar Transcripción</button>
+</div>
 </div>
 
 <!-- PASO 3: VISTA PREVIA -->
 <div id="step-preview" class="step" style="display:none;">
 <div class="step-header">
 <span class="step-number">3</span>
-<h2>Vista Previa</h2>
+<h2>Vista Previa del Documento</h2>
 </div>
 
 <div class="preview-controls">
-<button class="btn-back" onclick="goBackToEdit()">✏️ Editar Datos</button>
-<button class="btn-new" onclick="startOver()">🔄 Nuevo Documento</button>
+<button class="btn-edit" onclick="editarDocumento()">✏️ Editar Datos</button>
+<button class="btn-new" onclick="nuevoDocumento()"> Nuevo Documento</button>
 </div>
 
-<!-- SELECTOR DE ESTILOS EN VISTA PREVIA -->
-<div class="style-changer">
-<h3>🎨 Cambiar Estilo:</h3>
+<!-- SELECTOR DE ESTILOS EN VISTA PREVIA (solo para CV) -->
+<div id="style-changer-cv" class="style-changer" style="display:none;">
+<h3> Cambiar Estilo:</h3>
 <div class="style-selector-inline">
-<button class="style-btn" onclick="changeStyle('moderno')">Moderno</button>
-<button class="style-btn" onclick="changeStyle('clasico')">Clásico</button>
-<button class="style-btn" onclick="changeStyle('creativo')">Creativo</button>
-<button class="style-btn" onclick="changeStyle('minimalista')">Minimalista</button>
-<button class="style-btn" onclick="changeStyle('profesional')">Profesional</button>
+<button class="style-btn" onclick="cambiarEstilo('moderno')">Moderno</button>
+<button class="style-btn" onclick="cambiarEstilo('clasico')">Clásico</button>
+<button class="style-btn" onclick="cambiarEstilo('creativo')">Creativo</button>
+<button class="style-btn" onclick="cambiarEstilo('minimalista')">Minimalista</button>
+<button class="style-btn" onclick="cambiarEstilo('profesional')">Profesional</button>
 </div>
 </div>
 
 <div class="download-buttons">
-<button class="btn-download btn-pdf" onclick="downloadPDF()">📄 Descargar PDF</button>
-<button class="btn-download btn-word" onclick="downloadWord()">📝 Descargar Word</button>
+<button class="btn-download btn-pdf" onclick="descargarPDF()"> Descargar PDF</button>
+<button class="btn-download btn-word" onclick="descargarWord()"> Descargar Word</button>
 </div>
 
 <div id="document-preview" class="document-preview">
