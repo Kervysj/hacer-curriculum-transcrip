@@ -2,7 +2,7 @@
 // VARIABLES GLOBALES
 // ============================================
 let currentType = '';
-let currentCVData = null; // Guarda los datos del CV para poder cambiar estilos
+let currentCVData = null;
 let experienciaCount = 0;
 let educacionCount = 0;
 let cursosCount = 0;
@@ -12,6 +12,7 @@ let cursosCount = 0;
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
     checkTheme();
+    console.log('✅ Generador cargado correctamente');
 });
 
 // ============================================
@@ -40,7 +41,7 @@ function checkTheme() {
 }
 
 // ============================================
-// NAVEGACIÓN ENTRE PASOS
+// NAVEGACIÓN
 // ============================================
 function selectType(type) {
     currentType = type;
@@ -72,7 +73,7 @@ function goBackToEdit() {
 }
 
 function startOver() {
-    if (confirm('¿Seguro que quieres empezar un nuevo documento? Se perderán los datos no guardados.')) {
+    if (confirm('¿Seguro que quieres empezar un nuevo documento?')) {
         document.getElementById('step-preview').style.display = 'none';
         document.getElementById('step-type').style.display = 'block';
         document.getElementById('form-cv').style.display = 'none';
@@ -83,9 +84,6 @@ function startOver() {
     }
 }
 
-// ============================================
-// TOGGLE SECCIONES CV
-// ============================================
 function toggleSecciones() {
     const completo = document.getElementById('cv-completo').checked;
     const select = document.getElementById('secciones-select');
@@ -136,7 +134,7 @@ function addCurso() {
     div.id = 'cur-' + cursosCount;
     div.innerHTML = '<button class="btn-remove" onclick="removeItem(\'cur-' + cursosCount + '\')">✕</button>' +
         '<div class="form-grid">' +
-        '<div class="form-group"><label>Nombre del Curso</label><input type="text" class="cur-nombre" placeholder="Ej: Excel Avanzado"></div>' +
+        '<div class="form-group"><label>Nombre del Curso</label><input type="text" class="cur-nombre" placeholder="Ej: Excel"></div>' +
         '<div class="form-group"><label>Institución</label><input type="text" class="cur-inst" placeholder="Ej: Google"></div>' +
         '<div class="form-group"><label>Año</label><input type="text" class="cur-anio" placeholder="Ej: 2023"></div>' +
         '</div>';
@@ -149,60 +147,50 @@ function removeItem(id) {
 }
 
 // ============================================
-//  FUNCIÓN PARA ANALIZAR CV PEGADO (CORREGIDA)
+//  FUNCIÓN PARA ANALIZAR CV (CORREGIDA CON DEBUG)
 // ============================================
 function parsearCVCompleto() {
     const texto = document.getElementById('cv-texto-completo').value.trim();
     
+    console.log('🔍 Iniciando análisis del CV...');
+    console.log('Texto recibido:', texto.substring(0, 100) + '...');
+    
     if (!texto) {
-        showNotification('Por favor pega el contenido de tu CV primero', 'error');
+        showNotification('❌ Por favor pega el contenido de tu CV primero', 'error');
         return;
     }
 
-    // Estructura para guardar los datos
     const datos = {
-        nombre: '',
-        telefono: '',
-        email: '',
-        ciudad: '',
-        linkedin: '',
-        perfil: '',
-        experiencia: [],
-        educacion: [],
-        cursos: [],
-        habilidades: '',
-        idiomas: ''
+        nombre: '', telefono: '', email: '', ciudad: '', linkedin: '',
+        perfil: '', experiencia: [], educacion: [], cursos: [],
+        habilidades: '', idiomas: ''
     };
 
-    // Dividir el texto en líneas
     const lineas = texto.split('\n').map(l => l.trim()).filter(l => l);
+    console.log('Líneas encontradas:', lineas.length);
     
     let seccionActual = 'inicio';
     let bufferExp = null;
     let bufferEdu = null;
 
-    // Palabras clave para detectar secciones
     const keywords = {
-        perfil: ['PERFIL PROFESIONAL', 'PERFIL', 'OBJETIVO PROFESIONAL', 'SOBRE MÍ', 'SOBRE MI', 'RESUMEN PROFESIONAL'],
-        experiencia: ['EXPERIENCIA LABORAL', 'EXPERIENCIA PROFESIONAL', 'EXPERIENCIA', 'TRAYECTORIA', 'HISTORIAL LABORAL'],
-        educacion: ['FORMACIÓN ACADÉMICA', 'FORMACION ACADEMICA', 'EDUCACIÓN', 'EDUCACION', 'ESTUDIOS', 'ACADÉMICO', 'ACADEMICO'],
-        habilidades: ['HABILIDADES', 'SKILLS', 'COMPETENCIAS', 'DESTREZAS', 'HABILIDADES Y CONOCIMIENTOS', 'CONOCIMIENTOS'],
-        cursos: ['CURSOS', 'CURSOS REALIZADOS', 'CERTIFICACIONES', 'CAPACITACIONES', 'TALLERES', 'CURSOS Y CERTIFICADOS'],
-        idiomas: ['IDIOMAS', 'LANGUAGES', 'LENGUAS']
+        perfil: ['PERFIL PROFESIONAL', 'PERFIL', 'OBJETIVO', 'SOBRE MÍ', 'SOBRE MI'],
+        experiencia: ['EXPERIENCIA LABORAL', 'EXPERIENCIA PROFESIONAL', 'EXPERIENCIA'],
+        educacion: ['FORMACIÓN ACADÉMICA', 'FORMACION ACADEMICA', 'EDUCACIÓN', 'EDUCACION', 'ESTUDIOS'],
+        habilidades: ['HABILIDADES', 'SKILLS', 'COMPETENCIAS', 'DESTREZAS'],
+        cursos: ['CURSOS', 'CURSOS REALIZADOS', 'CERTIFICACIONES', 'CAPACITACIONES'],
+        idiomas: ['IDIOMAS', 'LANGUAGES']
     };
 
-    // Procesar cada línea
     for (let i = 0; i < lineas.length; i++) {
         const linea = lineas[i];
         const lineaUpper = linea.toUpperCase();
         let esInicioSeccion = false;
 
-        // Revisar si esta línea es el inicio de una sección
         for (const key in keywords) {
             const words = keywords[key];
             for (let j = 0; j < words.length; j++) {
                 if (lineaUpper.includes(words[j])) {
-                    // Guardar buffers pendientes antes de cambiar de sección
                     if (bufferExp) {
                         datos.experiencia.push(bufferExp);
                         bufferExp = null;
@@ -213,6 +201,7 @@ function parsearCVCompleto() {
                     }
                     seccionActual = key;
                     esInicioSeccion = true;
+                    console.log('Sección detectada:', key);
                     break;
                 }
             }
@@ -221,26 +210,24 @@ function parsearCVCompleto() {
 
         if (esInicioSeccion) continue;
 
-        // Procesar según la sección actual
         if (seccionActual === 'inicio') {
-            // Datos personales (primeras líneas antes de cualquier sección)
             if (!datos.nombre && i === 0) {
                 datos.nombre = linea;
-            } else if (linea.match(/04\d{2}-?\d{7}/) || linea.match(/04\d{2}\s?\d{7}/) || linea.toLowerCase().includes('teléfono') || linea.toLowerCase().includes('telefono') || linea.toLowerCase().includes('celular') || linea.toLowerCase().includes('tlf')) {
+                console.log('Nombre detectado:', datos.nombre);
+            } else if (linea.match(/04\d{2}-?\d{7}/) || linea.toLowerCase().includes('teléfono') || linea.toLowerCase().includes('telefono')) {
                 datos.telefono = linea.replace(/.*?:\s*/i, '').trim();
             } else if (linea.includes('@')) {
                 datos.email = linea.replace(/.*?:\s*/i, '').trim();
-            } else if (linea.toLowerCase().match(/ciudad|ubicación|direccion|edo\.|estado|caracas|méxico|bogota|anzoategui/)) {
+            } else if (linea.toLowerCase().match(/ciudad|ubicación|direccion|edo\.|estado/)) {
                 datos.ciudad = linea.replace(/.*?:\s*/i, '').trim();
-            } else if (linea.toLowerCase().match(/linkedin|web|portfolio|github/)) {
+            } else if (linea.toLowerCase().match(/linkedin|web|portfolio/)) {
                 datos.linkedin = linea.replace(/.*?:\s*/i, '').trim();
-            } else if (!datos.ciudad && linea.match(/edo\.|estado|caracas|méxico|bogota|anzoategui|guanipa/i)) {
+            } else if (!datos.ciudad && linea.match(/edo\.|estado|anzoategui|guanipa/i)) {
                 datos.ciudad = linea;
             }
         } else if (seccionActual === 'perfil') {
             datos.perfil += linea + ' ';
         } else if (seccionActual === 'experiencia') {
-            // Detectar si es una nueva experiencia (línea con guión o muy corta en mayúsculas)
             if (linea.includes(' - ') || (linea.length < 80 && lineaUpper === linea && linea.length > 5)) {
                 if (bufferExp) datos.experiencia.push(bufferExp);
                 const partes = linea.split(' - ');
@@ -269,22 +256,13 @@ function parsearCVCompleto() {
                     inicio: '',
                     fin: ''
                 };
-                // Extraer año si existe
-                const anioMatch = linea.match(/\d{4}/);
-                if (anioMatch) {
-                    bufferEdu.fin = anioMatch[0];
-                }
             } else if (bufferEdu) {
                 bufferEdu.titulo += ' ' + linea;
             } else {
                 bufferEdu = { inst: '', titulo: linea, inicio: '', fin: '' };
             }
         } else if (seccionActual === 'habilidades') {
-            if (linea.includes(':')) {
-                datos.habilidades += linea + '. ';
-            } else {
-                datos.habilidades += linea + ', ';
-            }
+            datos.habilidades += linea + ', ';
         } else if (seccionActual === 'cursos') {
             if (linea.includes(' - ') || linea.match(/\d{4}/)) {
                 const partes = linea.split(' - ');
@@ -302,21 +280,46 @@ function parsearCVCompleto() {
         }
     }
 
-    // Guardar los últimos buffers pendientes
     if (bufferExp) datos.experiencia.push(bufferExp);
     if (bufferEdu) datos.educacion.push(bufferEdu);
 
+    console.log('Datos extraídos:', datos);
+
     // ============================================
-    // LLENAR EL FORMULARIO CON LOS DATOS
+    // LLENAR EL FORMULARIO
     // ============================================
-    if (datos.nombre) document.getElementById('cv-nombre').value = datos.nombre;
-    if (datos.telefono) document.getElementById('cv-telefono').value = datos.telefono;
-    if (datos.email) document.getElementById('cv-email').value = datos.email;
-    if (datos.ciudad) document.getElementById('cv-ciudad').value = datos.ciudad;
-    if (datos.linkedin) document.getElementById('cv-linkedin').value = datos.linkedin;
-    if (datos.perfil.trim()) document.getElementById('cv-perfil').value = datos.perfil.trim();
-    if (datos.habilidades.trim()) document.getElementById('cv-habilidades').value = datos.habilidades.trim();
-    if (datos.idiomas.trim()) document.getElementById('cv-idiomas').value = datos.idiomas.trim();
+    if (datos.nombre) {
+        document.getElementById('cv-nombre').value = datos.nombre;
+        console.log('✅ Nombre llenado');
+    }
+    if (datos.telefono) {
+        document.getElementById('cv-telefono').value = datos.telefono;
+        console.log('✅ Teléfono llenado');
+    }
+    if (datos.email) {
+        document.getElementById('cv-email').value = datos.email;
+        console.log('✅ Email llenado');
+    }
+    if (datos.ciudad) {
+        document.getElementById('cv-ciudad').value = datos.ciudad;
+        console.log('✅ Ciudad llenada');
+    }
+    if (datos.linkedin) {
+        document.getElementById('cv-linkedin').value = datos.linkedin;
+        console.log('✅ LinkedIn llenado');
+    }
+    if (datos.perfil.trim()) {
+        document.getElementById('cv-perfil').value = datos.perfil.trim();
+        console.log('✅ Perfil llenado');
+    }
+    if (datos.habilidades.trim()) {
+        document.getElementById('cv-habilidades').value = datos.habilidades.trim();
+        console.log('✅ Habilidades llenadas');
+    }
+    if (datos.idiomas.trim()) {
+        document.getElementById('cv-idiomas').value = datos.idiomas.trim();
+        console.log('✅ Idiomas llenados');
+    }
 
     // Llenar experiencias
     datos.experiencia.forEach(function(exp) {
@@ -330,6 +333,7 @@ function parsearCVCompleto() {
             if (exp.descripcion) last.querySelector('.exp-desc').value = exp.descripcion.trim();
         }
     });
+    console.log('✅ Experiencias llenadas:', datos.experiencia.length);
 
     // Llenar educación
     datos.educacion.forEach(function(edu) {
@@ -339,10 +343,9 @@ function parsearCVCompleto() {
             const last = items[items.length - 1];
             if (edu.titulo) last.querySelector('.edu-titulo').value = edu.titulo;
             if (edu.inst) last.querySelector('.edu-inst').value = edu.inst;
-            if (edu.inicio) last.querySelector('.edu-inicio').value = edu.inicio;
-            if (edu.fin) last.querySelector('.edu-fin').value = edu.fin;
         }
     });
+    console.log('✅ Educación llenada:', datos.educacion.length);
 
     // Llenar cursos
     datos.cursos.forEach(function(cur) {
@@ -355,20 +358,24 @@ function parsearCVCompleto() {
             if (cur.anio) last.querySelector('.cur-anio').value = cur.anio;
         }
     });
+    console.log('✅ Cursos llenados:', datos.cursos.length);
 
-    showNotification('✅ ¡CV analizado y organizado automáticamente!', 'success');
+    showNotification('✅ ¡CV analizado y organizado! Revisa los campos abajo', 'success');
     
-    // Limpiar el textarea
     document.getElementById('cv-texto-completo').value = '';
     
-    // Scroll suave hacia el formulario
+    // SCROLL SUAVE HACIA EL FORMULARIO
     setTimeout(function() {
-        document.querySelector('#form-cv .form-section').scrollIntoView({ behavior: 'smooth' });
-    }, 500);
+        const primerCampo = document.querySelector('#form-cv .form-section');
+        if (primerCampo) {
+            primerCampo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            console.log('Scroll realizado');
+        }
+    }, 300);
 }
 
 // ============================================
-// RECOLECTAR DATOS DEL FORMULARIO
+// RECOLECTAR DATOS
 // ============================================
 function recolectarDatosCV() {
     const data = {
@@ -455,11 +462,11 @@ function generateDocument() {
 }
 
 // ============================================
-// CAMBIAR ESTILO DESDE VISTA PREVIA
+// CAMBIAR ESTILO
 // ============================================
 function changeStyle(nuevoEstilo) {
     if (!currentCVData) {
-        showNotification('No hay datos del CV para cambiar el estilo', 'error');
+        showNotification('No hay datos del CV', 'error');
         return;
     }
     
@@ -475,34 +482,30 @@ function changeStyle(nuevoEstilo) {
     }
     
     document.getElementById('document-preview').innerHTML = html;
-    showNotification(' Estilo cambiado a: ' + nuevoEstilo.charAt(0).toUpperCase() + nuevoEstilo.slice(1), 'success');
+    showNotification('✨ Estilo cambiado a: ' + nuevoEstilo.charAt(0).toUpperCase() + nuevoEstilo.slice(1), 'success');
 }
 
 // ============================================
-// ESTILOS DE CV (5 Variantes)
+// FUNCIONES DE GENERACIÓN DE CV (5 estilos)
 // ============================================
 function generateCVModerno(d) {
     let sidebar = '<div class="cv-sidebar">';
     if (d.foto) sidebar += '<img src="' + d.foto + '" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:20px; border: 4px solid white;">';
     sidebar += '<h2 style="margin-bottom:20px;">' + d.nombre + '</h2>';
-    if (d.telefono) sidebar += '<p> ' + d.telefono + '</p>';
+    if (d.telefono) sidebar += '<p>📞 ' + d.telefono + '</p>';
     if (d.email) sidebar += '<p>✉️ ' + d.email + '</p>';
     if (d.ciudad) sidebar += '<p>📍 ' + d.ciudad + '</p>';
     if (d.linkedin) sidebar += '<p>🔗 ' + d.linkedin + '</p>';
     
     if (d.secciones.indexOf('habilidades') !== -1 && d.habilidades) {
         sidebar += '<div style="margin-top:30px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Habilidades</h3><ul style="list-style:none; padding:0;">';
-        d.habilidades.split(',').forEach(function(h) {
-            if (h.trim()) sidebar += '<li style="margin-bottom:8px;">• ' + h.trim() + '</li>';
-        });
+        d.habilidades.split(',').forEach(function(h) { if (h.trim()) sidebar += '<li style="margin-bottom:8px;">• ' + h.trim() + '</li>'; });
         sidebar += '</ul></div>';
     }
     
     if (d.secciones.indexOf('idiomas') !== -1 && d.idiomas) {
         sidebar += '<div style="margin-top:30px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Idiomas</h3><ul style="list-style:none; padding:0;">';
-        d.idiomas.split(',').forEach(function(i) {
-            if (i.trim()) sidebar += '<li style="margin-bottom:8px;">• ' + i.trim() + '</li>';
-        });
+        d.idiomas.split(',').forEach(function(i) { if (i.trim()) sidebar += '<li style="margin-bottom:8px;">• ' + i.trim() + '</li>'; });
         sidebar += '</ul></div>';
     }
     sidebar += '</div>';
@@ -592,7 +595,7 @@ function generateCVCreativo(d) {
     let html = '<div class="cv-creativo"><div class="cv-header"><h1 style="font-size:2.5rem; margin-bottom:10px;">' + d.nombre + '</h1><div style="font-size:1.1rem;">';
     if (d.telefono) html += '<span>📞 ' + d.telefono + '</span>';
     if (d.email) html += '<span> | ✉️ ' + d.email + '</span>';
-    if (d.ciudad) html += '<span> |  ' + d.ciudad + '</span>';
+    if (d.ciudad) html += '<span> | 📍 ' + d.ciudad + '</span>';
     html += '</div></div>';
     
     if (d.secciones.indexOf('perfil') !== -1 && d.perfil) {
@@ -625,9 +628,7 @@ function generateCVCreativo(d) {
     
     if (d.secciones.indexOf('habilidades') !== -1 && d.habilidades) {
         html += '<div style="margin-bottom:30px;"><h2 style="color:#f59e0b;">Habilidades</h2><div style="display:flex; flex-wrap:wrap; gap:10px;">';
-        d.habilidades.split(',').forEach(function(h) {
-            if (h.trim()) html += '<span style="background:#f59e0b; color:white; padding:5px 15px; border-radius:20px;">' + h.trim() + '</span>';
-        });
+        d.habilidades.split(',').forEach(function(h) { if (h.trim()) html += '<span style="background:#f59e0b; color:white; padding:5px 15px; border-radius:20px;">' + h.trim() + '</span>'; });
         html += '</div></div>';
     }
     
@@ -697,17 +698,13 @@ function generateCVProfesional(d) {
     
     if (d.secciones.indexOf('habilidades') !== -1 && d.habilidades) {
         sidebar += '<div style="margin-top:30px;"><h3 style="color:#1e3a8a; border-bottom:2px solid #1e3a8a; padding-bottom:10px;">Habilidades</h3><ul style="list-style:none; padding:0;">';
-        d.habilidades.split(',').forEach(function(h) {
-            if (h.trim()) sidebar += '<li>• ' + h.trim() + '</li>';
-        });
+        d.habilidades.split(',').forEach(function(h) { if (h.trim()) sidebar += '<li>• ' + h.trim() + '</li>'; });
         sidebar += '</ul></div>';
     }
     
     if (d.secciones.indexOf('idiomas') !== -1 && d.idiomas) {
         sidebar += '<div style="margin-top:30px;"><h3 style="color:#1e3a8a; border-bottom:2px solid #1e3a8a; padding-bottom:10px;">Idiomas</h3><ul style="list-style:none; padding:0;">';
-        d.idiomas.split(',').forEach(function(i) {
-            if (i.trim()) sidebar += '<li>• ' + i.trim() + '</li>';
-        });
+        d.idiomas.split(',').forEach(function(i) { if (i.trim()) sidebar += '<li>• ' + i.trim() + '</li>'; });
         sidebar += '</ul></div>';
     }
     sidebar += '</div>';
