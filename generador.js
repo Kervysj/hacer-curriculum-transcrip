@@ -1,3 +1,4 @@
+
 // VARIABLES GLOBALES
 let currentType = '';
 let currentCVData = null;
