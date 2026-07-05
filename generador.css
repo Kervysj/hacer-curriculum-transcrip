@@ -19,6 +19,7 @@ body.dark-mode {
 --text-primary: #f9fafb;
 --text-secondary: #9ca3af;
 --border-color: #4b5563;
+--card-shadow: rgba(0, 0, 0, 0.3);
 --primary: #60a5fa;
 --primary-hover: #3b82f6;
 }
@@ -286,6 +287,44 @@ cursor: pointer;
 width: 20px;
 height: 20px;
 cursor: pointer;
+}
+
+/* SELECTOR DE ESTILOS */
+.style-selector {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap: 15px;
+}
+
+.style-option {
+background: var(--bg-primary);
+border: 3px solid var(--border-color);
+border-radius: 10px;
+padding: 15px;
+text-align: center;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.style-option:has(input:checked) {
+border-color: var(--primary);
+background: #dbeafe;
+}
+
+.style-option input[type="radio"] {
+display: none;
+}
+
+.style-name {
+display: block;
+font-weight: bold;
+margin-bottom: 5px;
+color: var(--text-primary);
+}
+
+.style-desc {
+font-size: 0.85rem;
+color: var(--text-secondary);
 }
 
 /* BOTÓN GENERAR */
