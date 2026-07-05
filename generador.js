@@ -1,23 +1,18 @@
-// ============================================
 // VARIABLES GLOBALES
-// ============================================
 let currentType = '';
 let currentCVData = null;
+let currentDocType = ''; // 'cv' o 'transcripcion'
 let experienciaCount = 0;
 let educacionCount = 0;
 let cursosCount = 0;
 
-// ============================================
 // INICIALIZACIÓN
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
     checkTheme();
     console.log('✅ Generador cargado correctamente');
 });
 
-// ============================================
-// MODO OSCURO/CLARO
-// ============================================
+// MODO OSCURO
 function toggleTheme() {
     const body = document.body;
     const btn = document.getElementById('theme-toggle');
@@ -26,7 +21,7 @@ function toggleTheme() {
         btn.textContent = '☀️ Modo Claro';
         localStorage.setItem('theme', 'dark');
     } else {
-        btn.textContent = '🌙 Modo Oscuro';
+        btn.textContent = ' Modo Oscuro';
         localStorage.setItem('theme', 'light');
     }
 }
@@ -40,49 +35,30 @@ function checkTheme() {
     }
 }
 
-// ============================================
-// NAVEGACIÓN
-// ============================================
+// NAVEGACIÓN ENTRE PASOS
+function goToStep(stepId) {
+    document.querySelectorAll('.step').forEach(step => {
+        step.style.display = 'none';
+    });
+    document.getElementById(stepId).style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
 function selectType(type) {
     currentType = type;
-    document.getElementById('step-type').style.display = 'none';
-    document.getElementById('step-data').style.display = 'block';
-
+    currentDocType = type;
+    
     if (type === 'cv') {
-        document.getElementById('data-title').textContent = 'Ingresa los datos de tu CV';
+        document.getElementById('form-title').textContent = 'Ingresa los datos de tu CV';
         document.getElementById('form-cv').style.display = 'block';
         document.getElementById('form-transcripcion').style.display = 'none';
     } else {
-        document.getElementById('data-title').textContent = 'Configura tu Transcripción';
+        document.getElementById('form-title').textContent = 'Configura tu Transcripción';
         document.getElementById('form-cv').style.display = 'none';
         document.getElementById('form-transcripcion').style.display = 'block';
     }
-    window.scrollTo(0, 0);
-}
-
-function goBackToType() {
-    document.getElementById('step-data').style.display = 'none';
-    document.getElementById('step-type').style.display = 'block';
-    window.scrollTo(0, 0);
-}
-
-function goBackToEdit() {
-    // NO borrar los datos - solo volver al formulario
-    document.getElementById('step-preview').style.display = 'none';
-    document.getElementById('step-data').style.display = 'block';
-    window.scrollTo(0, 0);
-}
-
-function startOver() {
-    if (confirm('¿Seguro que quieres empezar un nuevo documento? Se perderán los datos.')) {
-        document.getElementById('step-preview').style.display = 'none';
-        document.getElementById('step-type').style.display = 'block';
-        document.getElementById('form-cv').style.display = 'none';
-        document.getElementById('form-transcripcion').style.display = 'none';
-        currentType = '';
-        currentCVData = null;
-        window.scrollTo(0, 0);
-    }
+    
+    goToStep('step-form');
 }
 
 function toggleSecciones() {
@@ -91,9 +67,7 @@ function toggleSecciones() {
     select.style.display = completo ? 'none' : 'block';
 }
 
-// ============================================
 // AGREGAR CAMPOS DINÁMICOS
-// ============================================
 function addExperiencia() {
     experienciaCount++;
     const container = document.getElementById('experiencia-list');
@@ -147,9 +121,7 @@ function removeItem(id) {
     if (item) item.remove();
 }
 
-// ============================================
-// FUNCIÓN PARA ANALIZAR CV (CORREGIDA)
-// ============================================
+// FUNCIÓN PARA ANALIZAR CV
 function parsearCVCompleto() {
     const texto = document.getElementById('cv-texto-completo').value.trim();
     
@@ -328,7 +300,7 @@ function parsearCVCompleto() {
         }
     });
 
-    alert('✅ ¡CV analizado! Revisa los campos abajo y haz scroll para verlos');
+    alert('✅ ¡CV analizado! Revisa los campos abajo');
     
     document.getElementById('cv-texto-completo').value = '';
     
@@ -337,9 +309,7 @@ function parsearCVCompleto() {
     }, 300);
 }
 
-// ============================================
-// RECOLECTAR DATOS
-// ============================================
+// RECOLECTAR DATOS DEL CV
 function recolectarDatosCV() {
     const data = {
         nombre: document.getElementById('cv-nombre').value || 'Tu Nombre',
@@ -396,44 +366,82 @@ function recolectarDatosCV() {
     return data;
 }
 
-// ============================================
-// GENERAR DOCUMENTO
-// ============================================
-function generateDocument() {
-    console.log('Generando documento...');
+// GENERAR CV Y MOSTRAR VISTA PREVIA
+function generarCV() {
+    console.log('Generando CV...');
     
-    if (currentType === 'cv') {
-        currentCVData = recolectarDatosCV();
-        const styleRadio = document.querySelector('input[name="cv-style"]:checked');
-        const estilo = styleRadio ? styleRadio.value : 'moderno';
-        currentCVData.estilo = estilo;
-        
-        console.log('Datos del CV:', currentCVData);
-        
-        let html = '';
-        switch(estilo) {
-            case 'moderno': html = generateCVModerno(currentCVData); break;
-            case 'clasico': html = generateCVClasico(currentCVData); break;
-            case 'creativo': html = generateCVCreativo(currentCVData); break;
-            case 'minimalista': html = generateCVMinimalista(currentCVData); break;
-            case 'profesional': html = generateCVProfesional(currentCVData); break;
-        }
-        
-        document.getElementById('document-preview').innerHTML = html;
-        console.log('CV generado correctamente');
-    } else {
-        generateTranscripcion();
+    currentCVData = recolectarDatosCV();
+    const styleRadio = document.querySelector('input[name="cv-style"]:checked');
+    const estilo = styleRadio ? styleRadio.value : 'moderno';
+    currentCVData.estilo = estilo;
+    
+    console.log('Datos del CV:', currentCVData);
+    
+    let html = '';
+    switch(estilo) {
+        case 'moderno': html = generateCVModerno(currentCVData); break;
+        case 'clasico': html = generateCVClasico(currentCVData); break;
+        case 'creativo': html = generateCVCreativo(currentCVData); break;
+        case 'minimalista': html = generateCVMinimalista(currentCVData); break;
+        case 'profesional': html = generateCVProfesional(currentCVData); break;
     }
     
-    document.getElementById('step-data').style.display = 'none';
-    document.getElementById('step-preview').style.display = 'block';
-    window.scrollTo(0, 0);
+    document.getElementById('document-preview').innerHTML = html;
+    document.getElementById('style-changer-cv').style.display = 'block';
+    
+    console.log('CV generado correctamente');
+    goToStep('step-preview');
 }
 
-// ============================================
-// CAMBIAR ESTILO
-// ============================================
-function changeStyle(nuevoEstilo) {
+// GENERAR TRANSCRIPCIÓN
+function generarTranscripcion() {
+    const tipo = document.getElementById('trans-tipo').value;
+    const fuente = document.getElementById('trans-fuente').value;
+    const interlineado = document.getElementById('trans-interlineado').value;
+    const titulo = document.getElementById('trans-titulo').value || 'Transcripción';
+    const fecha = document.getElementById('trans-fecha').value;
+    const lugar = document.getElementById('trans-lugar').value;
+    const participantes = document.getElementById('trans-participantes').value;
+    const contenido = document.getElementById('trans-contenido').value;
+
+    let html = '';
+    if (tipo === 'apa') {
+        html = generateTransAPA({titulo: titulo, fecha: fecha, lugar: lugar, participantes: participantes, contenido: contenido, fuente: fuente, interlineado: interlineado});
+    } else {
+        html = generateTransLegal({titulo: titulo, fecha: fecha, lugar: lugar, participantes: participantes, contenido: contenido, fuente: fuente, interlineado: interlineado});
+    }
+    
+    document.getElementById('document-preview').innerHTML = html;
+    document.getElementById('style-changer-cv').style.display = 'none';
+    
+    goToStep('step-preview');
+}
+
+// EDITAR DOCUMENTO (volver al formulario sin perder datos)
+function editarDocumento() {
+    if (currentDocType === 'cv') {
+        document.getElementById('form-cv').style.display = 'block';
+        document.getElementById('form-transcripcion').style.display = 'none';
+    } else {
+        document.getElementById('form-cv').style.display = 'none';
+        document.getElementById('form-transcripcion').style.display = 'block';
+    }
+    goToStep('step-form');
+}
+
+// NUEVO DOCUMENTO
+function nuevoDocumento() {
+    if (confirm('¿Seguro que quieres crear un nuevo documento? Se perderán los datos actuales.')) {
+        currentCVData = null;
+        currentDocType = '';
+        document.getElementById('form-cv').style.display = 'none';
+        document.getElementById('form-transcripcion').style.display = 'none';
+        goToStep('step-type');
+    }
+}
+
+// CAMBIAR ESTILO EN VISTA PREVIA
+function cambiarEstilo(nuevoEstilo) {
     if (!currentCVData) {
         alert('No hay datos del CV');
         return;
@@ -454,9 +462,7 @@ function changeStyle(nuevoEstilo) {
     alert('✨ Estilo cambiado a: ' + nuevoEstilo.charAt(0).toUpperCase() + nuevoEstilo.slice(1));
 }
 
-// ============================================
-// FUNCIONES DE GENERACIÓN DE CV
-// ============================================
+// FUNCIONES DE GENERACIÓN DE CV (5 estilos)
 function generateCVModerno(d) {
     let sidebar = '<div class="cv-sidebar">';
     if (d.foto) sidebar += '<img src="' + d.foto + '" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:20px; border: 4px solid white;">';
@@ -712,28 +718,7 @@ function generateCVProfesional(d) {
     return '<div class="cv-profesional">' + sidebar + main + '</div>';
 }
 
-// ============================================
-// GENERAR TRANSCRIPCIÓN
-// ============================================
-function generateTranscripcion() {
-    const tipo = document.getElementById('trans-tipo').value;
-    const fuente = document.getElementById('trans-fuente').value;
-    const interlineado = document.getElementById('trans-interlineado').value;
-    const titulo = document.getElementById('trans-titulo').value || 'Transcripción';
-    const fecha = document.getElementById('trans-fecha').value;
-    const lugar = document.getElementById('trans-lugar').value;
-    const participantes = document.getElementById('trans-participantes').value;
-    const contenido = document.getElementById('trans-contenido').value;
-
-    let html = '';
-    if (tipo === 'apa') {
-        html = generateTransAPA({titulo: titulo, fecha: fecha, lugar: lugar, participantes: participantes, contenido: contenido, fuente: fuente, interlineado: interlineado});
-    } else {
-        html = generateTransLegal({titulo: titulo, fecha: fecha, lugar: lugar, participantes: participantes, contenido: contenido, fuente: fuente, interlineado: interlineado});
-    }
-    document.getElementById('document-preview').innerHTML = html;
-}
-
+// GENERAR TRANSCRIPCIÓN APA
 function generateTransAPA(d) {
     let fechaF = '';
     if (d.fecha) {
@@ -757,6 +742,7 @@ function generateTransAPA(d) {
     return '<div class="trans-apa">' + header + body + '</div>';
 }
 
+// GENERAR TRANSCRIPCIÓN LEGAL
 function generateTransLegal(d) {
     let fechaF = '';
     if (d.fecha) {
@@ -785,14 +771,13 @@ function generateTransLegal(d) {
     return '<div class="trans-legal">' + header + body + '</div>';
 }
 
-// ============================================
-// DESCARGAS
-// ============================================
-function downloadPDF() {
+// DESCARGAR PDF
+function descargarPDF() {
     window.print();
 }
 
-function downloadWord() {
+// DESCARGAR WORD
+function descargarWord() {
     const content = document.getElementById('document-preview').innerHTML;
     const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Documento</title></head><body>' + content + '</body></html>';
     const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
