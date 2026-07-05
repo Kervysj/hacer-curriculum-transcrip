@@ -3,222 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generador de CV y Transcripciones</title>
-<link rel="stylesheet" href="generador.css">
+<title>Mis Herramientas de Negocio</title>
+<style>
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: #f4f7f6;
+margin: 0;
+padding: 40px;
+}
+.container {
+max-width: 800px;
+margin: 0 auto;
+text-align: center;
+}
+h1 {
+color: #1f2937;
+margin-bottom: 30px;
+}
+.tools-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+}
+.tool-card {
+background: white;
+padding: 30px;
+border-radius: 15px;
+text-decoration: none;
+color: #333;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+transition: transform 0.2s;
+}
+.tool-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+.tool-icon {
+font-size: 3rem;
+margin-bottom: 15px;
+}
+.tool-card h2 {
+margin: 10px 0;
+color: #3b82f6;
+}
+.tool-card p {
+color: #6b7280;
+}
+</style>
 </head>
 <body>
-
-<header>
-<div class="header-content">
-<h1>📄 Generador de Documentos</h1>
-<button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">🌙 Modo Oscuro</button>
-</div>
-<p class="subtitle">Crea currículums profesionales y transcripciones con formato APA o legal</p>
-</header>
-
-<main>
-<!-- PASO 1: TIPO DE DOCUMENTO -->
-<div id="step-type" class="step active">
-<div class="step-header">
-<span class="step-number">1</span>
-<h2>¿Qué tipo de documento necesitas?</h2>
-</div>
-<div class="type-grid">
-<div class="type-card" onclick="selectType('cv')">
-<div class="type-icon">👤</div>
-<h3>Currículum Vitae</h3>
-<p>5 estilos profesionales para elegir</p>
-</div>
-<div class="type-card" onclick="selectType('transcripcion')">
-<div class="type-icon">📝</div>
-<h3>Transcripción</h3>
-<p>Formato APA o Documento Legal</p>
+<div class="container">
+<h1>🎯 Mis Herramientas de Negocio</h1>
+<div class="tools-grid">
+<a href="index.html" class="tool-card">
+<div class="tool-icon">💰</div>
+<h2>Calculadora Financiera</h2>
+<p>ROI, intereses, punto de equilibrio y más</p>
+</a>
+<a href="generador.html" class="tool-card">
+<div class="tool-icon">📄</div>
+<h2>Generador de CV y Transcripciones</h2>
+<p>Crea currículums profesionales y transcripciones APA</p>
+</a>
+<a href="proveedores.html" class="tool-card" style="display:none;">
+<div class="tool-icon">📦</div>
+<h2>Portal de Proveedores</h2>
+<p>Gestiona tus proveedores</p>
+</a>
 </div>
 </div>
-</div>
-
-<!-- PASO 2: DATOS (se muestra según el tipo) -->
-<div id="step-data" class="step" style="display:none;">
-<div class="step-header">
-<span class="step-number">2</span>
-<h2 id="data-title">Ingresa tus datos</h2>
-<button class="btn-back" onclick="goBackToType()">⬅ Cambiar tipo</button>
-</div>
-
-<!-- FORMULARIO CV -->
-<div id="form-cv" style="display:none;">
-<div class="form-section">
-<h3>👤 Datos Personales</h3>
-<div class="form-grid">
-<div class="form-group">
-<label>Nombre Completo *</label>
-<input type="text" id="cv-nombre" placeholder="Ej: Juan Pérez García">
-</div>
-<div class="form-group">
-<label>Teléfono</label>
-<input type="tel" id="cv-telefono" placeholder="Ej: 555-123-4567">
-</div>
-<div class="form-group">
-<label>Email</label>
-<input type="email" id="cv-email" placeholder="Ej: juan@email.com">
-</div>
-<div class="form-group">
-<label>Ciudad</label>
-<input type="text" id="cv-ciudad" placeholder="Ej: Ciudad de México">
-</div>
-<div class="form-group">
-<label>LinkedIn / Web (opcional)</label>
-<input type="text" id="cv-linkedin" placeholder="Ej: linkedin.com/in/juan">
-</div>
-<div class="form-group">
-<label>Foto (opcional - URL)</label>
-<input type="text" id="cv-foto" placeholder="Pega URL de foto o deja vacío">
-</div>
-</div>
-</div>
-
-<div class="form-section">
-<h3>🎯 Perfil Profesional</h3>
-<textarea id="cv-perfil" rows="4" placeholder="Breve descripción de tu perfil profesional..."></textarea>
-</div>
-
-<div class="form-section">
-<h3>💼 Experiencia Laboral</h3>
-<div id="experiencia-list"></div>
-<button class="btn-add-item" onclick="addExperiencia()">➕ Agregar Experiencia</button>
-</div>
-
-<div class="form-section">
-<h3>🎓 Educación</h3>
-<div id="educacion-list"></div>
-<button class="btn-add-item" onclick="addEducacion()"> Agregar Educación</button>
-</div>
-
-<div class="form-section">
-<h3> Cursos</h3>
-<div id="cursos-list"></div>
-<button class="btn-add-item" onclick="addCurso()">➕ Agregar Curso</button>
-</div>
-
-<div class="form-section">
-<h3>🛠️ Habilidades</h3>
-<textarea id="cv-habilidades" rows="3" placeholder="Ej: Excel, Liderazgo, Inglés, Ventas (separadas por coma)"></textarea>
-</div>
-
-<div class="form-section">
-<h3>🌐 Idiomas</h3>
-<textarea id="cv-idiomas" rows="2" placeholder="Ej: Español (Nativo), Inglés (Avanzado), Francés (Básico)"></textarea>
-</div>
-
-<div class="form-section">
-<h3>⚙️ Opciones de CV</h3>
-<div class="options-box">
-<label class="checkbox-label">
-<input type="checkbox" id="cv-completo" checked onchange="toggleSecciones()">
-<span>Mostrar CV Completo (todas las secciones)</span>
-</label>
-<div id="secciones-select" style="display:none; margin-top:15px;">
-<p style="font-weight:bold; margin-bottom:10px;">Selecciona qué secciones mostrar:</p>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="perfil" checked> Perfil Profesional</label>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="experiencia" checked> Experiencia Laboral</label>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="educacion" checked> Educación</label>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="cursos" checked> Cursos</label>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="habilidades" checked> Habilidades</label>
-<label class="checkbox-label"><input type="checkbox" class="seccion-check" value="idiomas" checked> Idiomas</label>
-</div>
-</div>
-</div>
-</div>
-
-<!-- FORMULARIO TRANSCRIPCIÓN -->
-<div id="form-transcripcion" style="display:none;">
-<div class="form-section">
-<h3>️ Configuración de Transcripción</h3>
-<div class="form-grid">
-<div class="form-group">
-<label>Tipo de Formato *</label>
-<select id="trans-tipo">
-<option value="apa">📚 Normas APA (Académico)</option>
-<option value="legal">⚖️ Documento Legal</option>
-</select>
-</div>
-<div class="form-group">
-<label>Tamaño de Fuente</label>
-<select id="trans-fuente">
-<option value="11">11 pt (Arial)</option>
-<option value="12" selected>12 pt (Times New Roman)</option>
-</select>
-</div>
-<div class="form-group">
-<label>Interlineado</label>
-<select id="trans-interlineado">
-<option value="1">Simple (1.0)</option>
-<option value="1.5">1.5 líneas</option>
-<option value="2" selected>Doble (2.0) - APA estándar</option>
-</select>
-</div>
-</div>
-</div>
-
-<div class="form-section">
-<h3>📋 Datos del Documento</h3>
-<div class="form-grid">
-<div class="form-group">
-<label>Título del Documento</label>
-<input type="text" id="trans-titulo" placeholder="Ej: Entrevista con experto en marketing">
-</div>
-<div class="form-group">
-<label>Fecha</label>
-<input type="date" id="trans-fecha">
-</div>
-<div class="form-group">
-<label>Lugar (opcional)</label>
-<input type="text" id="trans-lugar" placeholder="Ej: Oficina central, CDMX">
-</div>
-<div class="form-group">
-<label>Participantes (opcional)</label>
-<input type="text" id="trans-participantes" placeholder="Ej: Juan Pérez, María García">
-</div>
-</div>
-</div>
-
-<div class="form-section">
-<h3>📝 Contenido de la Transcripción</h3>
-<p style="color:var(--text-secondary); margin-bottom:10px;">
-<strong>Formato APA:</strong> Escribe párrafos normales, se formatearán automáticamente.<br>
-<strong>Legal:</strong> Usa formato <strong>NOMBRE:</strong> texto (Ej: ABOGADO: ¿Cuál es su nombre?)
-</p>
-<textarea id="trans-contenido" rows="15" placeholder="Pega aquí el contenido de tu transcripción..."></textarea>
-</div>
-</div>
-
-<button class="btn-generate" onclick="generateDocument()">🎨 Generar Documento</button>
-</div>
-
-<!-- PASO 3: VISTA PREVIA Y DESCARGA -->
-<div id="step-preview" class="step" style="display:none;">
-<div class="step-header">
-<span class="step-number">3</span>
-<h2>Vista Previa del Documento</h2>
-</div>
-
-<div class="preview-controls">
-<button class="btn-back" onclick="goBackToEdit()">⬅ Editar datos</button>
-<button class="btn-new" onclick="startOver()">🔄 Hacer Otro Documento</button>
-</div>
-
-<div class="download-buttons">
-<button class="btn-download btn-pdf" onclick="downloadPDF()"> Descargar PDF</button>
-<button class="btn-download btn-word" onclick="downloadWord()">📝 Descargar Word</button>
-</div>
-
-<div id="document-preview" class="document-preview">
-<!-- Aquí se renderiza el documento -->
-</div>
-</div>
-
-</main>
-
-<script src="generador.js"></script>
 </body>
 </html>
