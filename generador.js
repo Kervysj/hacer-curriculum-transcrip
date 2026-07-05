@@ -16,7 +16,6 @@ function toggleTheme() {
     }
 }
 
-// Cargar tema guardado
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     const btn = document.getElementById('theme-toggle');
@@ -56,43 +55,48 @@ function selectType(type) {
     }
 }
 
+// ============================================
+// PLANTILLAS DE CARTAS CON EJEMPLOS COMPLETOS
+// ============================================
 function updateCartaPlaceholder() {
     const tipo = document.getElementById('carta-tipo').value;
     const textarea = document.getElementById('carta-texto');
-    const fecha = new Date().toLocaleDateString('es-ES', {year: 'numeric', month: 'long', day: 'numeric'});
 
-    const placeholders = {
-        trabajo: `${fecha}
+    const ejemplos = {
+        // ============================================
+        // CARTAS LABORALES
+        // ============================================
+        trabajo: `Ciudad de México, 15 de julio de 2025
 
 A QUIEN CORRESPONDA:
 
-Por medio de la presente, hago constar que [NOMBRE DEL EMPLEADO], con documento de identidad [NÚMERO DE DOCUMENTO], labora en [NOMBRE DE LA EMPRESA] desde el [FECHA DE INGRESO] hasta la fecha, desempeñando el cargo de [CARGO ACTUAL].
+Por medio de la presente, hago constar que (María González Ramírez), con documento de identidad (V-18.456.789), labora en (Distribuidora ABC, C.A.) desde el (15 de marzo de 2020) hasta la fecha, desempeñando el cargo de (Coordinadora de Ventas).
 
-Durante su tiempo en la empresa, ha demostrado ser una persona responsable, cumplida y con excelente desempeño en sus funciones.
+Durante su tiempo en la empresa, ha demostrado ser una persona responsable, cumplida y con excelente desempeño en sus funciones, destacándose por su liderazgo y compromiso con los objetivos del equipo.
 
 Se expide la presente carta a solicitud del interesado para los fines que estime convenientes.
 
 Atentamente,
 
-[NOMBRE DEL REPRESENTANTE LEGAL O RRHH]
-[CARGO]
-[NOMBRE DE LA EMPRESA]
-[Teléfono de contacto]
-[Email]`,
+(Carlos Mendoza)
+(Gerente de Recursos Humanos)
+(Distribuidora ABC, C.A.)
+(Teléfono: 0212-555-1234)
+(Email: rrhh@distribuidoraabc.com)`,
 
-        renuncia: `${fecha}
+        renuncia: `Ciudad de México, 15 de julio de 2025
 
-A: [NOMBRE DEL JEFE O DEPARTAMENTO DE RRHH]
-[CARGO]
-[NOMBRE DE LA EMPRESA]
+A: (Lic. Roberto Sánchez)
+(Director de Recursos Humanos)
+(Empresa XYZ, S.A. de C.V.)
 
-Estimado/a [NOMBRE]:
+Estimado (Lic. Sánchez):
 
-Por medio de la presente, comunico mi decisión de renunciar voluntariamente al cargo de [TU CARGO] que he venido desempeñando en [NOMBRE DE LA EMPRESA], efectiva a partir del [FECHA DE ÚLTIMO DÍA DE TRABAJO].
+Por medio de la presente, comunico mi decisión de renunciar voluntariamente al cargo de (Analista de Marketing Digital) que he venido desempeñando en (Empresa XYZ, S.A. de C.V.), efectiva a partir del (30 de julio de 2025).
 
 Esta decisión responde a motivos estrictamente personales y profesionales que me impiden continuar formando parte de su equipo de trabajo.
 
-Agradezco profundamente las oportunidades de crecimiento profesional y personal que me han brindado durante mi tiempo en la empresa, así como la confianza depositada en mi persona.
+Agradezco profundamente las oportunidades de crecimiento profesional y personal que me han brindado durante mi tiempo en la empresa, así como la confianza depositada en mi persona durante estos (3 años).
 
 Me comprometo a realizar una transición ordenada de mis responsabilidades y dejar todos los procesos en orden antes de mi salida.
 
@@ -100,138 +104,141 @@ Sin más por el momento, me despido cordialmente.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU CARGO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Firma]`,
+(Ana Lucía Fernández)
+(Analista de Marketing Digital)
+(V-22.345.678)
+(Firma)`,
 
-        despido: `${fecha}
+        despido: `Ciudad de México, 15 de julio de 2025
 
-[NOMBRE DEL EMPLEADO]
-[CARGO DEL EMPLEADO]
+(Pedro Jiménez López)
+(Técnico de Soporte)
 Presente.-
 
-Estimado/a [NOMBRE DEL EMPLEADO]:
+Estimado (Sr. Jiménez):
 
-Por medio de la presente, lamentamos informarle que la empresa [NOMBRE DE LA EMPRESA] ha tomado la decisión de dar por terminado su contrato de trabajo, efectiva a partir del [FECHA DE DESPIDO].
+Por medio de la presente, lamentamos informarle que la empresa (TechSolutions México, S.A. de C.V.) ha tomado la decisión de dar por terminado su contrato de trabajo, efectiva a partir del (31 de julio de 2025).
 
-Esta decisión se basa en [MOTIVO DEL DESPIDO - especificar según corresponda: bajo desempeño, reestructuración organizacional, supresión del cargo, etc.].
+Esta decisión se basa en (reestructuración organizacional del departamento de soporte técnico, que ha reducido la necesidad de personal en su área).
 
-Le informamos que se realizará el pago de sus prestaciones sociales, liquidación y demás derechos laborales que le corresponden según la legislación vigente, en la fecha [FECHA DE PAGO].
+Le informamos que se realizará el pago de sus prestaciones sociales, liquidación y demás derechos laborales que le corresponden según la legislación vigente, en la fecha (15 de agosto de 2025).
 
 Agradecemos los servicios prestados durante su tiempo en la empresa y le deseamos éxito en sus futuros proyectos profesionales.
 
 Atentamente,
 
-[NOMBRE DEL REPRESENTANTE LEGAL O RRHH]
-[CARGO]
-[NOMBRE DE LA EMPRESA]
-[Firma y sello]`,
+(Lic. Patricia Morales)
+(Directora de Recursos Humanos)
+(TechSolutions México, S.A. de C.V.)
+(Firma y sello)`,
 
-        recomendacion: `${fecha}
+        recomendacion: `Ciudad de México, 15 de julio de 2025
 
 A QUIEN CORRESPONDA:
 
-Por medio de la presente, recomiendo ampliamente a [NOMBRE DE LA PERSONA RECOMENDADA], quien laboró bajo mi supervisión en [NOMBRE DE LA EMPRESA] durante el período comprendido entre [FECHA DE INICIO] y [FECHA DE FIN], desempeñando el cargo de [CARGO DESEMPEÑADO].
+Por medio de la presente, recomiendo ampliamente a (Juan Carlos Pérez), quien laboró bajo mi supervisión en (Grupo Empresarial del Norte, S.A.) durante el período comprendido entre (enero de 2021) y (junio de 2024), desempeñando el cargo de (Supervisor de Logística).
 
-Durante este tiempo, [NOMBRE] demostró ser una persona altamente responsable, comprometida, proactiva y con excelentes habilidades para [MENCIONAR HABILIDADES ESPECÍFICAS].
+Durante este tiempo, (Juan Carlos) demostró ser una persona altamente responsable, comprometida, proactiva y con excelentes habilidades para (la coordinación de equipos, la resolución de problemas bajo presión y la optimización de procesos de distribución).
 
-Su desempeño fue siempre satisfactorio, cumpliendo con las metas establecidas y manteniendo una actitud positiva hacia el trabajo y sus compañeros.
+Su desempeño fue siempre satisfactorio, cumpliendo con las metas establecidas y manteniendo una actitud positiva hacia el trabajo y sus compañeros. Fue pieza clave en la reducción de tiempos de entrega en un 25%.
 
-No tengo inconveniente en recomendarlo/a para cualquier posición que desee desempeñar, ya que estoy convencido/a de que será un valioso aporte para cualquier organización.
+No tengo inconveniente en recomendarlo para cualquier posición que desee desempeñar, ya que estoy convencido de que será un valioso aporte para cualquier organización.
 
 Quedo a su disposición para cualquier información adicional que requieran.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU CARGO]
-[NOMBRE DE LA EMPRESA]
-[Teléfono de contacto]
-[Email]`,
+(Ing. Miguel Ángel Torres)
+(Gerente de Operaciones)
+(Grupo Empresarial del Norte, S.A.)
+(Teléfono: 0212-555-9876)
+(Email: mtorres@gruponorte.com)`,
 
-        permiso: `${fecha}
+        permiso: `Ciudad de México, 15 de julio de 2025
 
-A: [NOMBRE DEL JEFE O SUPERVISOR]
-[CARGO]
-[NOMBRE DE LA EMPRESA]
+A: (Lic. Fernando Gutiérrez)
+(Gerente de Área)
+(Empresa Comercial del Sur, S.A.)
 
-Estimado/a [NOMBRE]:
+Estimado (Lic. Gutiérrez):
 
-Por medio de la presente, solicito formalmente se me conceda un permiso [REMUNERADO / NO REMUNERADO] por [NÚMERO DE DÍAS] días, desde el [FECHA DE INICIO] hasta el [FECHA DE FIN], por motivos de [ESPECIFICAR MOTIVO].
+Por medio de la presente, solicito formalmente se me conceda un permiso (no remunerado) por (3) días, desde el (20 de julio de 2025) hasta el (22 de julio de 2025), por motivos de (asistencia al matrimonio de mi hermana en la ciudad de Guadalajara, Jalisco).
 
-Me comprometo a dejar todas mis responsabilidades debidamente organizadas y delegadas antes de mi ausencia, así como a reintegrarme a mis labores en la fecha indicada.
+Me comprometo a dejar todas mis responsabilidades debidamente organizadas y delegadas en (mi compañera Laura Martínez) antes de mi ausencia, así como a reintegrarme a mis labores el día (23 de julio de 2025) en el horario habitual.
 
 Agradezco de antemano su comprensión y atención a esta solicitud.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU CARGO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Firma]`,
+(Ricardo Álvarez Mendoza)
+(Analista Contable)
+(V-19.876.543)
+(Firma)`,
 
-        autorizacion: `${fecha}
+        // ============================================
+        // CARTAS ADMINISTRATIVAS Y COMERCIALES
+        // ============================================
+        autorizacion: `Ciudad de México, 15 de julio de 2025
 
 A QUIEN CORRESPONDA:
 
-Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], por medio de la presente autorizo a [NOMBRE DE LA PERSONA AUTORIZADA], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DE LA PERSONA AUTORIZADA], para que en mi nombre realice el siguiente trámite o acción:
+Yo, (Laura Beatriz Ramírez), identificada con (cédula de identidad V-20.123.456), por medio de la presente autorizo a (Carlos Eduardo Méndez), identificado con (cédula de identidad V-18.765.432), para que en mi nombre realice el siguiente trámite:
 
-[DESCRIBIR DETALLADAMENTE EL TRÁMITE O ACCIÓN AUTORIZADA]
+(Retirar el título universitario original de la Universidad Nacional Autónoma de México, correspondiente a la carrera de Licenciatura en Administración, generado en el período 2018-2022).
 
-Esta autorización es válida desde el [FECHA DE INICIO] hasta el [FECHA DE EXPIRACIÓN] o hasta que sea revocada por escrito.
+Esta autorización es válida desde el (15 de julio de 2025) hasta el (30 de julio de 2025) o hasta que sea revocada por escrito.
 
 Agradezco de antemano la atención prestada a la presente.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Teléfono de contacto]
-[Firma]`,
+(Laura Beatriz Ramírez)
+(V-20.123.456)
+(Teléfono: 044-55-1234-5678)
+(Firma)`,
 
-        compromiso: `${fecha}
+        compromiso: `Ciudad de México, 15 de julio de 2025
 
 CARTA DE COMPROMISO
 
-Yo, [NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], en mi calidad de [CARGO O ROL], por medio de la presente me comprometo formalmente a:
+Yo, (Roberto Sánchez Díaz), identificado con (cédula de identidad V-15.234.567), en mi calidad de (representante legal de la empresa Constructora del Valle, C.A.), por medio de la presente me comprometo formalmente a:
 
-[DESCRIBIR DETALLADAMENTE EL COMPROMISO ADQUIRIDO]
+(Realizar el pago de la suma de $25,000.00 (veinticinco mil pesos 00/100 M.N.) correspondiente a la factura N° 4521, por concepto de materiales de construcción suministrados por la empresa Proveedores Industriales, S.A.).
 
-Me obligo a cumplir con este compromiso en el plazo establecido, que vence el [FECHA LÍMITE DE CUMPLIMIENTO].
+Me obligo a cumplir con este compromiso en el plazo establecido, que vence el (30 de julio de 2025).
 
-En caso de incumplimiento, acepto las consecuencias legales y/o contractuales que de ello se deriven.
+En caso de incumplimiento, acepto las consecuencias legales y/o contractuales que de ello se deriven, incluyendo el pago de intereses moratorios según lo establecido en el contrato.
 
-Se firma la presente en [CIUDAD], a los [DÍA] días del mes de [MES] de [AÑO].
+Se firma la presente en (Ciudad de México), a los (15) días del mes de (julio) de (2025).
 
 Atentamente,
 
-[NOMBRE COMPLETO]
-[DOCUMENTO DE IDENTIDAD]
-[CARGO O ROL]
-[Firma]`,
+(Roberto Sánchez Díaz)
+(V-15.234.567)
+(Representante Legal - Constructora del Valle, C.A.)
+(Firma)`,
 
-        cobro: `${fecha}
+        cobro: `Ciudad de México, 15 de julio de 2025
 
-[NOMBRE DEL DEUDOR O EMPRESA DEUDORA]
-[DIRECCIÓN]
-[CARGO O DEPARTAMENTO]
+(Distribuidora El Sol, S.A. de C.V.)
+(Av. Insurgentes Sur 1234, Col. Del Valle)
+(Departamento de Cuentas por Cobrar)
 
 Estimados señores:
 
-Por medio de la presente, nos dirigimos a ustedes para solicitar formalmente el pago de la factura número [NÚMERO DE FACTURA] por un monto de [MONTO A COBRAR], la cual se encuentra vencida desde el [FECHA DE VENCIMIENTO].
+Por medio de la presente, nos dirigimos a ustedes para solicitar formalmente el pago de la factura número (F-2025-0456) por un monto de ($18,500.00 (dieciocho mil quinientos pesos 00/100 M.N.)), la cual se encuentra vencida desde el (30 de junio de 2025).
 
 Detalles de la deuda:
-- Factura N°: [NÚMERO]
-- Fecha de emisión: [FECHA]
-- Fecha de vencimiento: [FECHA]
-- Monto adeudado: [MONTO]
-- Concepto: [DESCRIPCIÓN DEL PRODUCTO O SERVICIO]
+- Factura N°: (F-2025-0456)
+- Fecha de emisión: (15 de junio de 2025)
+- Fecha de vencimiento: (30 de junio de 2025)
+- Monto adeudado: ($18,500.00)
+- Concepto: (Suministro de equipos de oficina - 10 sillas ergonómicas y 5 escritorios)
 
 Les solicitamos realizar el pago a la mayor brevedad posible en la siguiente cuenta bancaria:
-- Banco: [NOMBRE DEL BANCO]
-- Cuenta: [NÚMERO DE CUENTA]
-- Titular: [NOMBRE DEL TITULAR]
+- Banco: (BBVA)
+- Cuenta: (0123 4567 8901 2345)
+- Titular: (Mueblería Moderna, S.A. de C.V.)
 
 En caso de que el pago ya haya sido realizado, agradecemos nos envíen el comprobante correspondiente.
 
@@ -239,204 +246,214 @@ Quedamos a su disposición para cualquier consulta o aclaración.
 
 Atentamente,
 
-[TU NOMBRE O NOMBRE DE LA EMPRESA]
-[CARGO]
-[Teléfono de contacto]
-[Email]`,
+(Fernanda López Castillo)
+(Gerente de Finanzas)
+(Teléfono: 0212-555-4321)
+(Email: cobranzas@muebleriamoderna.com)`,
 
-        presentacion: `${fecha}
+        presentacion: `Ciudad de México, 15 de julio de 2025
 
-[NOMBRE DEL DESTINATARIO O EMPRESA]
-[CARGO]
-[DIRECCIÓN]
+(Lic. Andrés Martínez)
+(Director de Compras)
+(Grupo Comercial del Pacífico, S.A.)
+(Av. Revolución 567, Col. Centro)
 
 Estimados señores:
 
-Me dirijo a ustedes con el propósito de presentarme formalmente y poner a su disposición mis servicios profesionales en el área de [ÁREA DE ESPECIALIZACIÓN].
+Me dirijo a ustedes con el propósito de presentarme formalmente y poner a su disposición mis servicios profesionales en el área de (consultoría en marketing digital y estrategias de comercio electrónico).
 
-Soy [TU NOMBRE COMPLETO], [TU PROFESIÓN O TÍTULO], con [NÚMERO] años de experiencia en [ÁREA DE EXPERIENCIA]. A lo largo de mi trayectoria, he trabajado en [MENCIONAR EMPRESAS O PROYECTOS RELEVANTES], donde he desarrollado habilidades en [MENCIONAR HABILIDADES CLAVE].
+Soy (Diana Sofía Herrera), (Licenciada en Mercadotecnia con Maestría en Marketing Digital), con (8) años de experiencia en (el desarrollo de estrategias digitales para empresas del sector retail). A lo largo de mi trayectoria, he trabajado en (empresas como Amazon México, Liverpool y El Palacio de Hierro), donde he desarrollado habilidades en (SEO, SEM, análisis de datos y gestión de campañas publicitarias).
 
 Ofrezco servicios de:
-- [SERVICIO 1]
-- [SERVICIO 2]
-- [SERVICIO 3]
+- (Auditoría y estrategia de marketing digital)
+- (Gestión de campañas en Google Ads y Meta Ads)
+- (Optimización de conversión en tiendas en línea)
 
-Estoy convencido/a de que mi experiencia y competencias pueden aportar valor significativo a su organización. Adjunto mi currículum vitae para su consideración y quedo a su entera disposición para concertar una entrevista personal donde pueda ampliar la información sobre mi perfil profesional.
+Estoy convencida de que mi experiencia y competencias pueden aportar valor significativo a su organización, especialmente en su expansión al comercio electrónico. Adjunto mi currículum vitae para su consideración y quedo a su entera disposición para concertar una entrevista personal.
 
 Agradezco de antemano su atención y tiempo.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU PROFESIÓN]
-[Teléfono]
-[Email]
-[LinkedIn o sitio web - opcional]`,
+(Diana Sofía Herrera)
+(Licenciada en Mercadotecnia)
+(Teléfono: 044-55-9876-5432)
+(Email: diana.herrera@email.com)
+(LinkedIn: linkedin.com/in/dianaherrera)`,
 
-        agradecimiento: `${fecha}
+        agradecimiento: `Ciudad de México, 15 de julio de 2025
 
-[NOMBRE DEL DESTINATARIO]
-[CARGO]
-[NOMBRE DE LA EMPRESA O INSTITUCIÓN]
+(Lic. Patricia Vargas)
+(Directora de Talento Humano)
+(Banco Nacional de México)
 
-Estimado/a [NOMBRE]:
+Estimada (Lic. Vargas):
 
-Por medio de la presente, deseo expresarle mi más sincero agradecimiento por [MOTIVO DEL AGRADECIMIENTO].
+Por medio de la presente, deseo expresarle mi más sincero agradecimiento por (la oportunidad de haber formado parte del proceso de selección para el cargo de Analista Financiero Senior, así como por el tiempo y atención que usted y su equipo dedicaron a entrevistarme).
 
-Su apoyo y disposición han sido fundamentales para [DESCRIBIR EL IMPACTO POSITIVO].
+Su apoyo y disposición han sido fundamentales para (conocer más a fondo la cultura organizacional de Banco Nacional de México y reafirmar mi interés en formar parte de una institución tan prestigiosa).
 
-Valoro profundamente [MENCIONAR ALGUNA CUALIDAD O ACCIÓN ESPECÍFICA QUE DESEES DESTACAR] y espero poder corresponder a su confianza en futuras oportunidades.
+Valoro profundamente (la transparencia y calidez con la que me trataron durante todo el proceso, especialmente durante la entrevista técnica del pasado 10 de julio) y espero poder corresponder a su confianza en futuras oportunidades.
 
 Reitero mi agradecimiento y quedo a su entera disposición.
 
 Cordialmente,
 
-[TU NOMBRE COMPLETO]
-[TU CARGO O RELACIÓN]
-[Teléfono - opcional]
-[Email]`,
+(Javier Ortega Ruiz)
+(Candidato al cargo de Analista Financiero Senior)
+(Teléfono: 044-55-1122-3344)
+(Email: javier.ortega@email.com)`,
 
-        poder: `${fecha}
+        // ============================================
+        // CARTAS PERSONALES Y LEGALES
+        // ============================================
+        poder: `Ciudad de México, 15 de julio de 2025
 
 CARTA PODER
 
-Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], en mi carácter de [PODERDANTE], por medio de la presente otorgo poder especial y suficiente a [NOMBRE DEL APODERADO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DEL APODERADO], para que en mi nombre y representación realice los siguientes actos:
+Yo, (Elena María Castillo Rojas), identificada con (cédula de identidad V-17.654.321), en mi carácter de (propietaria del inmueble ubicado en Av. Juárez 456, Col. Centro, Ciudad de México), por medio de la presente otorgo poder especial y suficiente a (Luis Alberto Gómez Pérez), identificado con (cédula de identidad V-19.876.543), para que en mi nombre y representación realice los siguientes actos:
 
-[DESCRIBIR DETALLADAMENTE LOS ACTOS AUTORIZADOS]
+- (Firmar el contrato de arrendamiento del inmueble mencionado)
+- (Recibir el pago del depósito y primer mes de renta)
+- (Realizar el inventario y entrega del inmueble al arrendatario)
+- (Firmar cualquier documento relacionado con dicho arrendamiento)
 
-Este poder tiene vigencia desde el [FECHA DE INICIO] hasta el [FECHA DE EXPIRACIÓN] o hasta que sea revocado por escrito.
+Este poder tiene vigencia desde el (15 de julio de 2025) hasta el (30 de septiembre de 2025) o hasta que sea revocado por escrito.
 
 El apoderado deberá actuar siempre en beneficio de mis intereses y dentro de los límites establecidos en este documento.
 
-Se firma la presente en [CIUDAD], a los [DÍA] días del mes de [MES] de [AÑO].
+Se firma la presente en (Ciudad de México), a los (15) días del mes de (julio) de (2025).
 
 PODERDANTE:
 
-[TU NOMBRE COMPLETO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Firma]
+(Elena María Castillo Rojas)
+(V-17.654.321)
+(Firma)
 
 APODERADO:
 
-[NOMBRE DEL APODERADO]
-[DOCUMENTO DE IDENTIDAD]
-[Firma]
+(Luis Alberto Gómez Pérez)
+(V-19.876.543)
+(Firma)
 
-TESTIGOS (opcional):
+TESTIGOS:
 
-1. [NOMBRE DEL TESTIGO 1]
-   Documento: [NÚMERO]
+1. (María José Ramírez)
+   Documento: (V-20.111.222)
    Firma: _______________
 
-2. [NOMBRE DEL TESTIGO 2]
-   Documento: [NÚMERO]
+2. (Carlos Eduardo Díaz)
+   Documento: (V-18.333.444)
    Firma: _______________`,
 
-        invitacion: `${fecha}
+        invitacion: `Ciudad de México, 15 de julio de 2025
 
 CARTA DE INVITACIÓN
 
-Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], residente en [TU DIRECCIÓN COMPLETA], por medio de la presente invito formalmente a [NOMBRE DEL INVITADO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DEL INVITADO], residente en [DIRECCIÓN DEL INVITADO], a visitar [PAÍS/CIUDAD] con el propósito de [MOTIVO DE LA INVITACIÓN].
+Yo, (Roberto Carlos Mendoza), identificado con (pasaporte N° A12345678), residente en (Calle Reforma 789, Departamento 402, Col. Juárez, Ciudad de México, México), por medio de la presente invito formalmente a (Carmen Lucía Vargas), identificada con (cédula de identidad V-22.456.789), residente en (Av. Principal 123, Caracas, Venezuela), a visitar (México) con el propósito de (turismo y visita familiar, ya que es mi esposa y deseamos celebrar nuestro aniversario de bodas).
 
-Durante su estancia, el/la invitado/a se hospedará en [DIRECCIÓN DONDE SE ALOJARÁ] y permanecerá en el país desde el [FECHA DE LLEGADA] hasta el [FECHA DE SALIDA].
+Durante su estancia, la invitada se hospedará en (mi domicilio: Calle Reforma 789, Departamento 402, Col. Juárez, Ciudad de México) y permanecerá en el país desde el (1 de agosto de 2025) hasta el (15 de agosto de 2025).
 
-Me comprometo a asumir los gastos de [ESPECIFICAR GASTOS QUE CUBRIRÁS] durante su visita, así como a garantizar su retorno a su país de origen antes de la fecha indicada.
+Me comprometo a asumir los gastos de (alojamiento, alimentación, transporte interno y seguro médico) durante su visita, así como a garantizar su retorno a su país de origen antes de la fecha indicada.
 
 Datos del invitado:
-- Nombre completo: [NOMBRE]
-- Documento de identidad: [NÚMERO]
-- Fecha de nacimiento: [FECHA]
-- Nacionalidad: [NACIONALIDAD]
-- Relación con el invitante: [PARENTESCO O RELACIÓN]
+- Nombre completo: (Carmen Lucía Vargas Mendoza)
+- Documento de identidad: (V-22.456.789)
+- Fecha de nacimiento: (15 de marzo de 1990)
+- Nacionalidad: (Venezolana)
+- Relación con el invitante: (Esposa)
 
 Quedo a su disposición para cualquier información adicional que requieran.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Tu dirección completa]
-[Teléfono de contacto]
-[Email]
-[Firma]`,
+(Roberto Carlos Mendoza)
+(Pasaporte N° A12345678)
+(Calle Reforma 789, Departamento 402, Col. Juárez, Ciudad de México)
+(Teléfono: 044-55-7788-9900)
+(Email: roberto.mendoza@email.com)
+(Firma)`,
 
-        explicacion: `${fecha}
+        explicacion: `Ciudad de México, 15 de julio de 2025
 
 CARTA DE EXPLICACIÓN / DECLARACIÓN
 
 A QUIEN CORRESPONDA:
 
-Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], por medio de la presente me dirijo a ustedes con el propósito de explicar y aclarar la siguiente situación:
+Yo, (Alejandro Jiménez Pérez), identificado con (cédula de identidad V-21.345.678), por medio de la presente me dirijo a ustedes con el propósito de explicar y aclarar la siguiente situación:
 
-[DESCRIBIR DETALLADAMENTE LA SITUACIÓN O HECHO QUE REQUIERE EXPLICACIÓN]
+(El retraso en la entrega del proyecto "Sistema de Gestión de Inventarios" que tenía como fecha límite el 30 de junio de 2025).
 
 Los hechos ocurrieron de la siguiente manera:
 
-[DESCRIBIR CRONOLÓGICAMENTE LOS HECHOS]
+(El día 25 de junio de 2025, el servidor principal de la empresa sufrió una falla técnica inesperada que resultó en la pérdida parcial de los datos del proyecto. El departamento de TI tardó 5 días en recuperar la información, lo que imposibilitó cumplir con la fecha de entrega original).
 
-Las razones o motivos que me llevaron a [ACCION O SITUACION] fueron:
+Las razones o motivos que me llevaron a (solicitar una extensión del plazo) fueron:
 
-[EXPLICAR LAS RAZONES O CIRCUNSTANCIAS]
+(La necesidad de reconstruir parte del código perdido y realizar pruebas adicionales para garantizar la integridad del sistema. Además, se requirió la coordinación con el proveedor del servidor para implementar medidas de seguridad adicionales).
 
 Declaro que la información proporcionada en esta carta es veraz y completa, asumiendo la responsabilidad que de ello se derive.
 
-Estoy a su entera disposición para ampliar esta información o proporcionar documentación adicional que consideren necesaria.
+Estoy a su entera disposición para ampliar esta información o proporcionar documentación adicional que consideren necesaria, incluyendo el reporte técnico del departamento de TI.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Teléfono de contacto]
-[Email]
-[Firma]`,
+(Alejandro Jiménez Pérez)
+(V-21.345.678)
+(Teléfono: 044-55-3344-5566)
+(Email: alejandro.jimenez@email.com)
+(Firma)`,
 
-        reclamo: `${fecha}
+        reclamo: `Ciudad de México, 15 de julio de 2025
 
-[NOMBRE DE LA EMPRESA O ENTIDAD]
-[DEPARTAMENTO DE ATENCIÓN AL CLIENTE O RRHH]
-[DIRECCIÓN]
+(ElectroHogar México, S.A. de C.V.)
+(Departamento de Atención al Cliente)
+(Av. Universidad 2345, Col. Del Valle, Ciudad de México)
 
 Estimados señores:
 
-Por medio de la presente, me dirijo a ustedes para expresar formalmente mi inconformidad y presentar un reclamo respecto a [DESCRIBIR EL PRODUCTO O SERVICIO DEFECTUOSO].
+Por medio de la presente, me dirijo a ustedes para expresar formalmente mi inconformidad y presentar un reclamo respecto a (la lavadora automática modelo LH-5000 que adquirí en su sucursal del Centro Comercial Plaza Norte el día 20 de junio de 2025).
 
 Detalles del reclamo:
 
-- Fecha del incidente: [FECHA]
-- Número de factura o contrato: [NÚMERO]
-- Producto o servicio: [DESCRIPCIÓN]
-- Lugar: [SUCURSAL, TIENDA O UBICACIÓN]
+- Fecha del incidente: (10 de julio de 2025)
+- Número de factura: (F-2025-78945)
+- Producto: (Lavadora automática ElectroHogar modelo LH-5000, color blanco, 20 kg)
+- Lugar: (Sucursal Plaza Norte, Ciudad de México)
 
 Descripción del problema:
 
-[DESCRIBIR DETALLADAMENTE EL PROBLEMA]
+(El producto presenta una falla en el sistema de drenaje que provoca que el agua no se evacue correctamente durante el ciclo de lavado, generando inundaciones en el área donde está instalada. Además, emite un ruido excesivo durante el centrifugado que no es normal según las especificaciones del fabricante).
 
-He intentado resolver esta situación a través de [MENCIONAR ACCIONES PREVIAS] sin obtener una solución satisfactoria.
+He intentado resolver esta situación a través de (llamada al servicio técnico el 12 de julio y visita del técnico el 14 de julio, quien confirmó la falla pero indicó que no tenía las piezas de repuesto necesarias).
 
 Por lo expuesto, solicito formalmente:
 
-[ESPECIFICAR QUÉ SOLUCIÓN ESPERAS]
+(El reemplazo del producto por uno nuevo en iguales condiciones, o en su defecto, la devolución total del dinero pagado por un monto de $12,500.00 (doce mil quinientos pesos 00/100 M.N.)).
 
 Adjunto a esta carta los siguientes documentos de respaldo:
-- [DOCUMENTO 1]
-- [DOCUMENTO 2]
+- (Factura de compra N° F-2025-78945)
+- (Fotografías del producto y del daño causado)
+- (Reporte del técnico visitante)
 
-Espero recibir una respuesta formal en un plazo no mayor a [NÚMERO] días hábiles. De no obtener una solución satisfactoria, me veré en la obligación de acudir a las autoridades competentes para hacer valer mis derechos.
+Espero recibir una respuesta formal en un plazo no mayor a (10) días hábiles. De no obtener una solución satisfactoria, me veré en la obligación de acudir a la Procuraduría Federal del Consumidor (PROFECO) para hacer valer mis derechos.
 
 Atentamente,
 
-[TU NOMBRE COMPLETO]
-[TU DOCUMENTO DE IDENTIDAD]
-[Tu dirección]
-[Teléfono de contacto]
-[Email]
-[Firma]`
+(Sofía Martínez López)
+(V-23.456.789)
+(Calle Insurgentes 456, Departamento 301, Col. Roma Norte)
+(Teléfono: 044-55-6677-8899)
+(Email: sofia.martinez@email.com)
+(Firma)`
     };
 
-    textarea.placeholder = placeholders[tipo] || placeholders.trabajo;
+    textarea.value = ejemplos[tipo] || ejemplos.trabajo;
 }
 
+// ============================================
 // GENERAR CV
+// ============================================
 function generarCV() {
     const texto = document.getElementById('cv-texto').value.trim();
     const foto = document.getElementById('cv-foto-url').value.trim();
@@ -570,7 +587,7 @@ function generarCVModerno() {
     if (d.telefono) sidebar += `<p>📞 ${d.telefono}</p>`;
     if (d.email) sidebar += `<p>✉️ ${d.email}</p>`;
     if (d.ciudad) sidebar += `<p>📍 ${d.ciudad}</p>`;
-    if (d.linkedin) sidebar += `<p> ${d.linkedin}</p>`;
+    if (d.linkedin) sidebar += `<p>🔗 ${d.linkedin}</p>`;
     if (d.habilidades) sidebar += `<div style="margin-top:30px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Habilidades</h3><p>${d.habilidades}</p></div>`;
     if (d.idiomas) sidebar += `<div style="margin-top:20px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Idiomas</h3><p>${d.idiomas}</p></div>`;
     sidebar += `</div>`;
@@ -698,10 +715,10 @@ function generarCVProfesional() {
     if (d.foto) sidebar += `<img src="${d.foto}" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:20px;">`;
     sidebar += `<h2 style="margin-bottom:20px; color:#1e3a8a;">${d.nombre}</h2>`;
     if (d.titulo) sidebar += `<p style="color:#6b7280; margin-bottom:15px;">${d.titulo}</p>`;
-    if (d.telefono) sidebar += `<p>📞 ${d.telefono}</p>`;
+    if (d.telefono) sidebar += `<p> ${d.telefono}</p>`;
     if (d.email) sidebar += `<p>✉️ ${d.email}</p>`;
-    if (d.ciudad) sidebar += `<p>📍 ${d.ciudad}</p>`;
-    if (d.linkedin) sidebar += `<p>🔗 ${d.linkedin}</p>`;
+    if (d.ciudad) sidebar += `<p> ${d.ciudad}</p>`;
+    if (d.linkedin) sidebar += `<p> ${d.linkedin}</p>`;
     if (d.habilidades) sidebar += `<div style="margin-top:30px;"><h3 style="color:#1e3a8a; border-bottom:2px solid #1e3a8a; padding-bottom:10px; margin-bottom:15px;">Habilidades</h3><p>${d.habilidades}</p></div>`;
     if (d.idiomas) sidebar += `<div style="margin-top:20px;"><h3 style="color:#1e3a8a; border-bottom:2px solid #1e3a8a; padding-bottom:10px; margin-bottom:15px;">Idiomas</h3><p>${d.idiomas}</p></div>`;
     sidebar += `</div>`;
