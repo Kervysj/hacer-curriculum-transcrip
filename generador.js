@@ -62,82 +62,378 @@ function updateCartaPlaceholder() {
     const fecha = new Date().toLocaleDateString('es-ES', {year: 'numeric', month: 'long', day: 'numeric'});
 
     const placeholders = {
-        formal: `${fecha}
+        trabajo: `${fecha}
 
-Destinatario:
-[Nombre del destinatario]
-[Cargo]
-[Empresa/Institución]
+A QUIEN CORRESPONDA:
 
-Estimado/a [Nombre]:
+Por medio de la presente, hago constar que [NOMBRE DEL EMPLEADO], con documento de identidad [NÚMERO DE DOCUMENTO], labora en [NOMBRE DE LA EMPRESA] desde el [FECHA DE INGRESO] hasta la fecha, desempeñando el cargo de [CARGO ACTUAL].
 
-[Cuerpo de la carta - escribe aquí el contenido]
+Durante su tiempo en la empresa, ha demostrado ser una persona responsable, cumplida y con excelente desempeño en sus funciones.
+
+Se expide la presente carta a solicitud del interesado para los fines que estime convenientes.
 
 Atentamente,
-[Tu nombre]
-[Tu cargo]`,
+
+[NOMBRE DEL REPRESENTANTE LEGAL O RRHH]
+[CARGO]
+[NOMBRE DE LA EMPRESA]
+[Teléfono de contacto]
+[Email]`,
 
         renuncia: `${fecha}
 
-A: [Nombre del jefe/RRHH]
-[Cargo]
-[Empresa]
+A: [NOMBRE DEL JEFE O DEPARTAMENTO DE RRHH]
+[CARGO]
+[NOMBRE DE LA EMPRESA]
 
-Estimado/a [Nombre]:
+Estimado/a [NOMBRE]:
 
-Por medio de la presente, comunico mi decisión de renunciar al puesto de [tu cargo] que he venido desempeñando en [empresa], efectiva a partir del [fecha].
+Por medio de la presente, comunico mi decisión de renunciar voluntariamente al cargo de [TU CARGO] que he venido desempeñando en [NOMBRE DE LA EMPRESA], efectiva a partir del [FECHA DE ÚLTIMO DÍA DE TRABAJO].
 
-Agradezco las oportunidades de desarrollo profesional y personal que me han brindado durante mi tiempo en la empresa.
+Esta decisión responde a motivos estrictamente personales y profesionales que me impiden continuar formando parte de su equipo de trabajo.
 
-Quedo a su disposición para realizar la transición de mis responsabilidades.
+Agradezco profundamente las oportunidades de crecimiento profesional y personal que me han brindado durante mi tiempo en la empresa, así como la confianza depositada en mi persona.
+
+Me comprometo a realizar una transición ordenada de mis responsabilidades y dejar todos los procesos en orden antes de mi salida.
+
+Sin más por el momento, me despido cordialmente.
 
 Atentamente,
-[Tu nombre]
+
+[TU NOMBRE COMPLETO]
+[TU CARGO]
+[TU DOCUMENTO DE IDENTIDAD]
 [Firma]`,
+
+        despido: `${fecha}
+
+[NOMBRE DEL EMPLEADO]
+[CARGO DEL EMPLEADO]
+Presente.-
+
+Estimado/a [NOMBRE DEL EMPLEADO]:
+
+Por medio de la presente, lamentamos informarle que la empresa [NOMBRE DE LA EMPRESA] ha tomado la decisión de dar por terminado su contrato de trabajo, efectiva a partir del [FECHA DE DESPIDO].
+
+Esta decisión se basa en [MOTIVO DEL DESPIDO - especificar según corresponda: bajo desempeño, reestructuración organizacional, supresión del cargo, etc.].
+
+Le informamos que se realizará el pago de sus prestaciones sociales, liquidación y demás derechos laborales que le corresponden según la legislación vigente, en la fecha [FECHA DE PAGO].
+
+Agradecemos los servicios prestados durante su tiempo en la empresa y le deseamos éxito en sus futuros proyectos profesionales.
+
+Atentamente,
+
+[NOMBRE DEL REPRESENTANTE LEGAL O RRHH]
+[CARGO]
+[NOMBRE DE LA EMPRESA]
+[Firma y sello]`,
 
         recomendacion: `${fecha}
 
-A quien corresponda:
+A QUIEN CORRESPONDA:
 
-Por medio de la presente, recomiendo ampliamente a [Nombre de la persona] quien trabajó bajo mi supervisión en [empresa] durante el período [fecha inicio - fecha fin].
+Por medio de la presente, recomiendo ampliamente a [NOMBRE DE LA PERSONA RECOMENDADA], quien laboró bajo mi supervisión en [NOMBRE DE LA EMPRESA] durante el período comprendido entre [FECHA DE INICIO] y [FECHA DE FIN], desempeñando el cargo de [CARGO DESEMPEÑADO].
 
-Durante este tiempo, demostró ser una persona responsable, comprometida y con excelentes habilidades para [mencionar habilidades].
+Durante este tiempo, [NOMBRE] demostró ser una persona altamente responsable, comprometida, proactiva y con excelentes habilidades para [MENCIONAR HABILIDADES ESPECÍFICAS].
 
-Sin más por el momento, quedo a su disposición para cualquier información adicional.
+Su desempeño fue siempre satisfactorio, cumpliendo con las metas establecidas y manteniendo una actitud positiva hacia el trabajo y sus compañeros.
 
-Atentamente,
-[Tu nombre]
-[Tu cargo]
-[Teléfono de contacto]`,
+No tengo inconveniente en recomendarlo/a para cualquier posición que desee desempeñar, ya que estoy convencido/a de que será un valioso aporte para cualquier organización.
 
-        motivacion: `${fecha}
-
-Estimados señores de [Empresa]:
-
-Me dirijo a ustedes con el propósito de expresar mi interés en formar parte de su equipo de trabajo en el puesto de [puesto].
-
-Considero que mi experiencia en [área] y mis habilidades en [habilidades] me hacen un candidato ideal para este puesto.
-
-Adjunto mi currículum vitae para su consideración y quedo a su disposición para una entrevista personal.
+Quedo a su disposición para cualquier información adicional que requieran.
 
 Atentamente,
-[Tu nombre]
-[Teléfono]
+
+[TU NOMBRE COMPLETO]
+[TU CARGO]
+[NOMBRE DE LA EMPRESA]
+[Teléfono de contacto]
 [Email]`,
 
-        personal: `${fecha}
+        permiso: `${fecha}
 
-Estimado/a [Nombre]:
+A: [NOMBRE DEL JEFE O SUPERVISOR]
+[CARGO]
+[NOMBRE DE LA EMPRESA]
 
-[Escribe aquí el contenido de tu carta personal]
+Estimado/a [NOMBRE]:
 
-Sin más por el momento, recibe un cordial saludo.
+Por medio de la presente, solicito formalmente se me conceda un permiso [REMUNERADO / NO REMUNERADO] por [NÚMERO DE DÍAS] días, desde el [FECHA DE INICIO] hasta el [FECHA DE FIN], por motivos de [ESPECIFICAR MOTIVO].
+
+Me comprometo a dejar todas mis responsabilidades debidamente organizadas y delegadas antes de mi ausencia, así como a reintegrarme a mis labores en la fecha indicada.
+
+Agradezco de antemano su comprensión y atención a esta solicitud.
 
 Atentamente,
-[Tu nombre]`
+
+[TU NOMBRE COMPLETO]
+[TU CARGO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Firma]`,
+
+        autorizacion: `${fecha}
+
+A QUIEN CORRESPONDA:
+
+Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], por medio de la presente autorizo a [NOMBRE DE LA PERSONA AUTORIZADA], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DE LA PERSONA AUTORIZADA], para que en mi nombre realice el siguiente trámite o acción:
+
+[DESCRIBIR DETALLADAMENTE EL TRÁMITE O ACCIÓN AUTORIZADA]
+
+Esta autorización es válida desde el [FECHA DE INICIO] hasta el [FECHA DE EXPIRACIÓN] o hasta que sea revocada por escrito.
+
+Agradezco de antemano la atención prestada a la presente.
+
+Atentamente,
+
+[TU NOMBRE COMPLETO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Teléfono de contacto]
+[Firma]`,
+
+        compromiso: `${fecha}
+
+CARTA DE COMPROMISO
+
+Yo, [NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], en mi calidad de [CARGO O ROL], por medio de la presente me comprometo formalmente a:
+
+[DESCRIBIR DETALLADAMENTE EL COMPROMISO ADQUIRIDO]
+
+Me obligo a cumplir con este compromiso en el plazo establecido, que vence el [FECHA LÍMITE DE CUMPLIMIENTO].
+
+En caso de incumplimiento, acepto las consecuencias legales y/o contractuales que de ello se deriven.
+
+Se firma la presente en [CIUDAD], a los [DÍA] días del mes de [MES] de [AÑO].
+
+Atentamente,
+
+[NOMBRE COMPLETO]
+[DOCUMENTO DE IDENTIDAD]
+[CARGO O ROL]
+[Firma]`,
+
+        cobro: `${fecha}
+
+[NOMBRE DEL DEUDOR O EMPRESA DEUDORA]
+[DIRECCIÓN]
+[CARGO O DEPARTAMENTO]
+
+Estimados señores:
+
+Por medio de la presente, nos dirigimos a ustedes para solicitar formalmente el pago de la factura número [NÚMERO DE FACTURA] por un monto de [MONTO A COBRAR], la cual se encuentra vencida desde el [FECHA DE VENCIMIENTO].
+
+Detalles de la deuda:
+- Factura N°: [NÚMERO]
+- Fecha de emisión: [FECHA]
+- Fecha de vencimiento: [FECHA]
+- Monto adeudado: [MONTO]
+- Concepto: [DESCRIPCIÓN DEL PRODUCTO O SERVICIO]
+
+Les solicitamos realizar el pago a la mayor brevedad posible en la siguiente cuenta bancaria:
+- Banco: [NOMBRE DEL BANCO]
+- Cuenta: [NÚMERO DE CUENTA]
+- Titular: [NOMBRE DEL TITULAR]
+
+En caso de que el pago ya haya sido realizado, agradecemos nos envíen el comprobante correspondiente.
+
+Quedamos a su disposición para cualquier consulta o aclaración.
+
+Atentamente,
+
+[TU NOMBRE O NOMBRE DE LA EMPRESA]
+[CARGO]
+[Teléfono de contacto]
+[Email]`,
+
+        presentacion: `${fecha}
+
+[NOMBRE DEL DESTINATARIO O EMPRESA]
+[CARGO]
+[DIRECCIÓN]
+
+Estimados señores:
+
+Me dirijo a ustedes con el propósito de presentarme formalmente y poner a su disposición mis servicios profesionales en el área de [ÁREA DE ESPECIALIZACIÓN].
+
+Soy [TU NOMBRE COMPLETO], [TU PROFESIÓN O TÍTULO], con [NÚMERO] años de experiencia en [ÁREA DE EXPERIENCIA]. A lo largo de mi trayectoria, he trabajado en [MENCIONAR EMPRESAS O PROYECTOS RELEVANTES], donde he desarrollado habilidades en [MENCIONAR HABILIDADES CLAVE].
+
+Ofrezco servicios de:
+- [SERVICIO 1]
+- [SERVICIO 2]
+- [SERVICIO 3]
+
+Estoy convencido/a de que mi experiencia y competencias pueden aportar valor significativo a su organización. Adjunto mi currículum vitae para su consideración y quedo a su entera disposición para concertar una entrevista personal donde pueda ampliar la información sobre mi perfil profesional.
+
+Agradezco de antemano su atención y tiempo.
+
+Atentamente,
+
+[TU NOMBRE COMPLETO]
+[TU PROFESIÓN]
+[Teléfono]
+[Email]
+[LinkedIn o sitio web - opcional]`,
+
+        agradecimiento: `${fecha}
+
+[NOMBRE DEL DESTINATARIO]
+[CARGO]
+[NOMBRE DE LA EMPRESA O INSTITUCIÓN]
+
+Estimado/a [NOMBRE]:
+
+Por medio de la presente, deseo expresarle mi más sincero agradecimiento por [MOTIVO DEL AGRADECIMIENTO].
+
+Su apoyo y disposición han sido fundamentales para [DESCRIBIR EL IMPACTO POSITIVO].
+
+Valoro profundamente [MENCIONAR ALGUNA CUALIDAD O ACCIÓN ESPECÍFICA QUE DESEES DESTACAR] y espero poder corresponder a su confianza en futuras oportunidades.
+
+Reitero mi agradecimiento y quedo a su entera disposición.
+
+Cordialmente,
+
+[TU NOMBRE COMPLETO]
+[TU CARGO O RELACIÓN]
+[Teléfono - opcional]
+[Email]`,
+
+        poder: `${fecha}
+
+CARTA PODER
+
+Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], en mi carácter de [PODERDANTE], por medio de la presente otorgo poder especial y suficiente a [NOMBRE DEL APODERADO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DEL APODERADO], para que en mi nombre y representación realice los siguientes actos:
+
+[DESCRIBIR DETALLADAMENTE LOS ACTOS AUTORIZADOS]
+
+Este poder tiene vigencia desde el [FECHA DE INICIO] hasta el [FECHA DE EXPIRACIÓN] o hasta que sea revocado por escrito.
+
+El apoderado deberá actuar siempre en beneficio de mis intereses y dentro de los límites establecidos en este documento.
+
+Se firma la presente en [CIUDAD], a los [DÍA] días del mes de [MES] de [AÑO].
+
+PODERDANTE:
+
+[TU NOMBRE COMPLETO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Firma]
+
+APODERADO:
+
+[NOMBRE DEL APODERADO]
+[DOCUMENTO DE IDENTIDAD]
+[Firma]
+
+TESTIGOS (opcional):
+
+1. [NOMBRE DEL TESTIGO 1]
+   Documento: [NÚMERO]
+   Firma: _______________
+
+2. [NOMBRE DEL TESTIGO 2]
+   Documento: [NÚMERO]
+   Firma: _______________`,
+
+        invitacion: `${fecha}
+
+CARTA DE INVITACIÓN
+
+Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], residente en [TU DIRECCIÓN COMPLETA], por medio de la presente invito formalmente a [NOMBRE DEL INVITADO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD DEL INVITADO], residente en [DIRECCIÓN DEL INVITADO], a visitar [PAÍS/CIUDAD] con el propósito de [MOTIVO DE LA INVITACIÓN].
+
+Durante su estancia, el/la invitado/a se hospedará en [DIRECCIÓN DONDE SE ALOJARÁ] y permanecerá en el país desde el [FECHA DE LLEGADA] hasta el [FECHA DE SALIDA].
+
+Me comprometo a asumir los gastos de [ESPECIFICAR GASTOS QUE CUBRIRÁS] durante su visita, así como a garantizar su retorno a su país de origen antes de la fecha indicada.
+
+Datos del invitado:
+- Nombre completo: [NOMBRE]
+- Documento de identidad: [NÚMERO]
+- Fecha de nacimiento: [FECHA]
+- Nacionalidad: [NACIONALIDAD]
+- Relación con el invitante: [PARENTESCO O RELACIÓN]
+
+Quedo a su disposición para cualquier información adicional que requieran.
+
+Atentamente,
+
+[TU NOMBRE COMPLETO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Tu dirección completa]
+[Teléfono de contacto]
+[Email]
+[Firma]`,
+
+        explicacion: `${fecha}
+
+CARTA DE EXPLICACIÓN / DECLARACIÓN
+
+A QUIEN CORRESPONDA:
+
+Yo, [TU NOMBRE COMPLETO], identificado/a con [TIPO Y NÚMERO DE DOCUMENTO DE IDENTIDAD], por medio de la presente me dirijo a ustedes con el propósito de explicar y aclarar la siguiente situación:
+
+[DESCRIBIR DETALLADAMENTE LA SITUACIÓN O HECHO QUE REQUIERE EXPLICACIÓN]
+
+Los hechos ocurrieron de la siguiente manera:
+
+[DESCRIBIR CRONOLÓGICAMENTE LOS HECHOS]
+
+Las razones o motivos que me llevaron a [ACCION O SITUACION] fueron:
+
+[EXPLICAR LAS RAZONES O CIRCUNSTANCIAS]
+
+Declaro que la información proporcionada en esta carta es veraz y completa, asumiendo la responsabilidad que de ello se derive.
+
+Estoy a su entera disposición para ampliar esta información o proporcionar documentación adicional que consideren necesaria.
+
+Atentamente,
+
+[TU NOMBRE COMPLETO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Teléfono de contacto]
+[Email]
+[Firma]`,
+
+        reclamo: `${fecha}
+
+[NOMBRE DE LA EMPRESA O ENTIDAD]
+[DEPARTAMENTO DE ATENCIÓN AL CLIENTE O RRHH]
+[DIRECCIÓN]
+
+Estimados señores:
+
+Por medio de la presente, me dirijo a ustedes para expresar formalmente mi inconformidad y presentar un reclamo respecto a [DESCRIBIR EL PRODUCTO O SERVICIO DEFECTUOSO].
+
+Detalles del reclamo:
+
+- Fecha del incidente: [FECHA]
+- Número de factura o contrato: [NÚMERO]
+- Producto o servicio: [DESCRIPCIÓN]
+- Lugar: [SUCURSAL, TIENDA O UBICACIÓN]
+
+Descripción del problema:
+
+[DESCRIBIR DETALLADAMENTE EL PROBLEMA]
+
+He intentado resolver esta situación a través de [MENCIONAR ACCIONES PREVIAS] sin obtener una solución satisfactoria.
+
+Por lo expuesto, solicito formalmente:
+
+[ESPECIFICAR QUÉ SOLUCIÓN ESPERAS]
+
+Adjunto a esta carta los siguientes documentos de respaldo:
+- [DOCUMENTO 1]
+- [DOCUMENTO 2]
+
+Espero recibir una respuesta formal en un plazo no mayor a [NÚMERO] días hábiles. De no obtener una solución satisfactoria, me veré en la obligación de acudir a las autoridades competentes para hacer valer mis derechos.
+
+Atentamente,
+
+[TU NOMBRE COMPLETO]
+[TU DOCUMENTO DE IDENTIDAD]
+[Tu dirección]
+[Teléfono de contacto]
+[Email]
+[Firma]`
     };
 
-    textarea.placeholder = placeholders[tipo] || placeholders.formal;
+    textarea.placeholder = placeholders[tipo] || placeholders.trabajo;
 }
 
 // GENERAR CV
@@ -159,7 +455,6 @@ function generarCV() {
     window.scrollTo(0, 0);
 }
 
-// Parsear CV
 function parsearCV(texto, foto) {
     const lineas = texto.split('\n').map(l => l.trim()).filter(l => l);
     const datos = {
@@ -254,7 +549,6 @@ function parsearCV(texto, foto) {
     return datos;
 }
 
-// Renderizar CV
 function renderizarCV(estilo) {
     let html = '';
     switch(estilo) {
@@ -267,7 +561,6 @@ function renderizarCV(estilo) {
     document.getElementById('document-preview').innerHTML = html;
 }
 
-// Funciones de estilo CV
 function generarCVModerno() {
     const d = currentCVData;
     let sidebar = `<div class="cv-sidebar">`;
@@ -277,7 +570,7 @@ function generarCVModerno() {
     if (d.telefono) sidebar += `<p>📞 ${d.telefono}</p>`;
     if (d.email) sidebar += `<p>✉️ ${d.email}</p>`;
     if (d.ciudad) sidebar += `<p>📍 ${d.ciudad}</p>`;
-    if (d.linkedin) sidebar += `<p>🔗 ${d.linkedin}</p>`;
+    if (d.linkedin) sidebar += `<p> ${d.linkedin}</p>`;
     if (d.habilidades) sidebar += `<div style="margin-top:30px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Habilidades</h3><p>${d.habilidades}</p></div>`;
     if (d.idiomas) sidebar += `<div style="margin-top:20px;"><h3 style="border-bottom:2px solid white; padding-bottom:10px; margin-bottom:15px;">Idiomas</h3><p>${d.idiomas}</p></div>`;
     sidebar += `</div>`;
@@ -440,7 +733,6 @@ function generarCVProfesional() {
     return `<div class="cv-profesional">${sidebar}${main}</div>`;
 }
 
-// GENERAR CARTA
 function generarCarta() {
     const texto = document.getElementById('carta-texto').value.trim();
     
@@ -460,7 +752,6 @@ function generarCarta() {
     window.scrollTo(0, 0);
 }
 
-// GENERAR DOCUMENTO LEGAL
 function generarLegal() {
     const tipo = document.getElementById('legal-tipo').value;
     const titulo = document.getElementById('legal-titulo').value || 'Documento';
@@ -477,7 +768,6 @@ function generarLegal() {
     const fechaFormateada = fecha ? new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', {year: 'numeric', month: 'long', day: 'numeric'}) : '';
 
     if (tipo === 'apa') {
-        // APA 2.0 (doble espacio)
         html = `<div class="apa-2">`;
         html += `<div style="text-align:center; margin-bottom:30px;"><h1 style="font-size:12pt; margin-bottom:10px;">${titulo}</h1>`;
         if (fechaFormateada) html += `<p style="font-size:12pt;">${fechaFormateada}</p>`;
@@ -489,7 +779,6 @@ function generarLegal() {
         });
         html += `</div>`;
     } else if (tipo === 'apa15') {
-        // APA 1.5
         html = `<div class="apa-15">`;
         html += `<div style="text-align:center; margin-bottom:30px;"><h1 style="font-size:12pt; margin-bottom:10px;">${titulo}</h1>`;
         if (fechaFormateada) html += `<p style="font-size:12pt;">${fechaFormateada}</p>`;
@@ -501,7 +790,6 @@ function generarLegal() {
         });
         html += `</div>`;
     } else if (tipo === 'legal') {
-        // Documento Legal
         html = `<div class="legal-doc">`;
         html += `<div class="header"><h1 style="font-size:14pt; margin-bottom:10px;">${titulo}</h1>`;
         if (fechaFormateada) html += `<p style="font-size:12pt;"><strong>Fecha:</strong> ${fechaFormateada}</p>`;
@@ -518,7 +806,6 @@ function generarLegal() {
         });
         html += `</div>`;
     } else {
-        // Transcripción general
         html = `<div style="font-family:'Times New Roman', serif; font-size:12pt; line-height:1.5;">`;
         html += `<h1 style="text-align:center; margin-bottom:30px;">${titulo}</h1>`;
         if (fechaFormateada) html += `<p style="text-align:center; margin-bottom:10px;"><strong>Fecha:</strong> ${fechaFormateada}</p>`;
@@ -534,7 +821,6 @@ function generarLegal() {
     window.scrollTo(0, 0);
 }
 
-// CAMBIAR ESTILO CV
 function cambiarEstiloCV(estilo) {
     currentStyle = estilo;
     document.querySelectorAll('.style-btn').forEach(btn => btn.classList.remove('active'));
@@ -542,14 +828,12 @@ function cambiarEstiloCV(estilo) {
     renderizarCV(estilo);
 }
 
-// EDITAR DOCUMENTO
 function editarDocumento() {
     document.getElementById('step-preview').style.display = 'none';
     document.getElementById('step-input').style.display = 'block';
     window.scrollTo(0, 0);
 }
 
-// NUEVO DOCUMENTO
 function nuevoDocumento() {
     if (confirm('¿Seguro que quieres crear un nuevo documento?')) {
         document.getElementById('cv-texto').value = '';
@@ -565,12 +849,10 @@ function nuevoDocumento() {
     }
 }
 
-// DESCARGAR PDF
 function descargarPDF() {
     window.print();
 }
 
-// DESCARGAR WORD
 function descargarWord() {
     const content = document.getElementById('document-preview').innerHTML;
     const html = `
@@ -592,5 +874,5 @@ function descargarWord() {
     link.download = 'documento.doc';
     link.click();
     URL.revokeObjectURL(url);
-    alert('📝 Documento descargado. Ábrelo con Word para editar.');
+    alert(' Documento descargado. Ábrelo con Word para editar.');
 }
